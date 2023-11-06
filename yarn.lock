@@ -467,6 +467,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4":
+  version: 4.14.200
+  resolution: "@types/lodash@npm:4.14.200"
+  checksum: 7a8dac6dc866f10d1888846d6189d1faeb4f65adb139f0837a005fd1adcde62e60d7e7abb1a2733d13fc57bebb337d74182d8ad3dbd1d211dcd0c310c47e81bc
+  languageName: node
+  linkType: hard
+
 "@types/pug@npm:^2.0.6":
   version: 2.0.8
   resolution: "@types/pug@npm:2.0.8"
@@ -1809,6 +1816,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^10.0.1, lru-cache@npm:^9.1.1 || ^10.0.0":
   version: 10.0.1
   resolution: "lru-cache@npm:10.0.1"
@@ -2554,10 +2568,12 @@ __metadata:
   dependencies:
     "@sveltejs/adapter-cloudflare": "npm:^2.3.3"
     "@sveltejs/kit": "npm:^1.20.4"
+    "@types/lodash": "npm:^4"
     "@typescript-eslint/eslint-plugin": "npm:^6.0.0"
     "@typescript-eslint/parser": "npm:^6.0.0"
     eslint: "npm:^8.28.0"
     eslint-plugin-svelte: "npm:^2.30.0"
+    lodash: "npm:^4.17.21"
     svelte: "npm:^4.0.5"
     svelte-check: "npm:^3.4.3"
     tslib: "npm:^2.4.1"
