@@ -2,7 +2,7 @@ import { dev } from '$app/environment';
 import { env } from '$env/dynamic/private';
 import _ from 'lodash';
 import type { RequestHandler } from './$types';
-``
+
 export const GET: RequestHandler = async ({ request, url, platform, fetch }) => {
     let apiServer = "";
     if (dev) {
