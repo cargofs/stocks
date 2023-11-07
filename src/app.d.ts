@@ -13,6 +13,18 @@ declare global {
 			};
 		}
 	}
+
+	interface Target {
+		path?: string;
+		name: string;
+		inner?: Target[];
+	}
+
+	interface TargetMod {
+		path?: string;
+		nameParts: string[];
+		inner?: TargetMod[];
+	}
 }
 
 export { };
