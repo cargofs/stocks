@@ -25,6 +25,13 @@ declare global {
 		nameParts: string[];
 		inner?: TargetMod[];
 	}
+
+	namespace Data {
+		interface Price {
+			symbol: string
+			price: number
+		}
+	}
 }
 
 export { };
