@@ -1,5 +1,19 @@
 <script lang="ts">
+    import { onMount, setContext } from "svelte";
     import Navbar from "./Navbar.svelte";
+    import { writable, type Writable } from "svelte/store";
+
+    const pageTitleParts: Writable<string[]> = writable();
+    setContext("pageTitleParts", pageTitleParts);
+
+    onMount(() => {
+        pageTitleParts.subscribe((parts) => {
+            document.title = ["CoinStocks"]
+                .concat(parts)
+                .filter((item) => item && item.length > 0)
+                .join(" | ");
+        });
+    });
 </script>
 
 <Navbar />
