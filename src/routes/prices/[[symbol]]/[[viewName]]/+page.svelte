@@ -1,6 +1,7 @@
 <script lang="ts">
     import { Line } from "svelte-chartjs";
     import "chart.js/auto";
+    import "chartjs-adapter-luxon";
 
     import { DateTime } from "luxon";
 
@@ -52,9 +53,9 @@
 <Line
     data={{
         labels: _.concat(
-            data.prices.map((point) => DateTime.fromMillis(point.openTime)),
-            [DateTime.now()]
-        ).map((dt) => dt.setLocale("ru").toFormat(data.view.dateFormat)),
+            data.prices.map((point) => point.openTime),
+            [DateTime.now().toMillis()]
+        ),
         datasets: [
             {
                 label: "Открытие",
@@ -70,10 +71,34 @@
     }}
     options={{
         scales: {
+            x: {
+                type: "time",
+                time: {
+                    unit: data.view.timeUnit,
+                    isoWeekday: true,
+                },
+            },
             y: {
                 ticks: {
                     callback: function (value, index, ticks) {
                         return "$" + value.toLocaleString();
+                    },
+                },
+            },
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        let label = context.dataset.label || "";
+
+                        if (label) {
+                            label += ": ";
+                        }
+                        if (context.parsed.y !== null) {
+                            label += "$" + context.parsed.y.toLocaleString();
+                        }
+                        return label;
                     },
                 },
             },
