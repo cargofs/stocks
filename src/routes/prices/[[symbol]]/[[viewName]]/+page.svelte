@@ -56,18 +56,29 @@
 <Line
     data={{
         labels: data.prices.map((point) =>
-            DateTime.fromMillis(point.closeTime)
+            DateTime.fromMillis(point.openTime)
                 .setLocale("ru")
                 .toFormat(data.view.dateFormat)
         ),
         datasets: [
             {
-                label: "Закрытие",
-                data: data.prices.map((point) => point.close),
+                label: "Открытие",
+                data: data.prices.map((point) => point.open),
                 fill: true,
                 borderColor: "#f14668",
                 tension: 0.1,
             },
         ],
+    }}
+    options={{
+        scales: {
+            y: {
+                ticks: {
+                    callback: function (value, index, ticks) {
+                        return "$" + value.toLocaleString();
+                    },
+                },
+            },
+        },
     }}
 />
