@@ -8,8 +8,8 @@ export const load = (async ({ fetch, params }) => {
     const symbol = params.symbol ?? "BTC";
     const view = views.find(view => view.name == params.viewName) ?? views[0];
 
-    const allResponse = await fetch("/api/v1/coins/prices");
-    const allJSON = await allResponse.json() as Data.Price[];
+    const briefResponse = await fetch("/api/v1/coins/prices");
+    const briefs = await briefResponse.json() as Data.SymbolBrief[];
 
     const url = `/api/v1/coins/prices/${symbol}?interval=${view.interval}`;
 
@@ -17,10 +17,11 @@ export const load = (async ({ fetch, params }) => {
     const json = await response.json() as Data.PricePoint[];
 
     return {
-        symbol,
         view,
         url,
-        symbols: allJSON,
+        symbol,
+        symbols: briefs.map(brief => brief.symbol),
+        price: briefs.find(brief => brief.symbol == symbol)?.price ?? null,
         prices: view.points == Infinity ? json : _.slice(json, json.length - view.points)
     };
 }) satisfies PageLoad;

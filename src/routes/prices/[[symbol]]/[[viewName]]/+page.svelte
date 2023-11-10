@@ -11,19 +11,22 @@
 
     export let data: PageData;
 
-    let symbol = data.symbol;
-    let viewName = data.view.name;
+    let currentSymbol = data.symbol;
+    let currentViewName = data.view.name;
 
     async function symbolOrViewNameChanged() {
-        await goto(`/prices/${symbol}/${viewName}`);
+        await goto(`/prices/${currentSymbol}/${currentViewName}`);
     }
 </script>
 
 <div class="field is-grouped">
     <div class="control">
         <div class="select">
-            <select bind:value={symbol} on:change={symbolOrViewNameChanged}>
-                {#each data.symbols.map((price) => price.symbol) as symbol}
+            <select
+                bind:value={currentSymbol}
+                on:change={symbolOrViewNameChanged}
+            >
+                {#each data.symbols as symbol}
                     <option value={symbol}>{symbol}</option>
                 {/each}
             </select>
@@ -32,19 +35,18 @@
 
     <div class="control">
         <div class="field-label is-normal">
-            <label class="label"
-                >Текущая цена: {data.symbols.find(
-                    (price) => price.symbol == data.symbol
-                )?.price}</label
-            >
+            <label class="label">Текущая цена: {data.price}</label>
         </div>
     </div>
 
     <div class="control">
         <div class="select">
-            <select bind:value={viewName} on:change={symbolOrViewNameChanged}>
-                {#each views.map((view) => view.name) as view}
-                    <option value={view}>{view}</option>
+            <select
+                bind:value={currentViewName}
+                on:change={symbolOrViewNameChanged}
+            >
+                {#each views.map((view) => view.name) as viewName}
+                    <option value={viewName}>{viewName}</option>
                 {/each}
             </select>
         </div>

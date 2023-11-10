@@ -27,7 +27,7 @@ declare global {
     }
 
     namespace Data {
-        interface Price {
+        interface SymbolBrief {
             symbol: string
             price: number
         }
