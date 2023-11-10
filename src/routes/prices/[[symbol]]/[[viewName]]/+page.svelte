@@ -9,6 +9,8 @@
 
     import { views } from "./views";
 
+    import _ from "lodash";
+
     export let data: PageData;
 
     let currentSymbol = data.symbol;
@@ -34,12 +36,6 @@
     </div>
 
     <div class="control">
-        <div class="field-label is-normal">
-            <label class="label">Текущая цена: {data.price}</label>
-        </div>
-    </div>
-
-    <div class="control">
         <div class="select">
             <select
                 bind:value={currentViewName}
@@ -55,15 +51,17 @@
 
 <Line
     data={{
-        labels: data.prices.map((point) =>
-            DateTime.fromMillis(point.openTime)
-                .setLocale("ru")
-                .toFormat(data.view.dateFormat)
-        ),
+        labels: _.concat(
+            data.prices.map((point) => DateTime.fromMillis(point.openTime)),
+            [DateTime.now()]
+        ).map((dt) => dt.setLocale("ru").toFormat(data.view.dateFormat)),
         datasets: [
             {
                 label: "Открытие",
-                data: data.prices.map((point) => point.open),
+                data: _.concat(
+                    data.prices.map((point) => point.open),
+                    [data.price ?? 0]
+                ),
                 fill: true,
                 borderColor: "#f14668",
                 tension: 0.1,
