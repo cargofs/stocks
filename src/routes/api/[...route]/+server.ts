@@ -11,7 +11,7 @@ export const GET: RequestHandler = async ({ request, url, platform, fetch }) => 
         apiServer = platform!.env!.API_SERVER;
     }
 
-    const newUrl = apiServer + url.pathname;
+    const newUrl = apiServer + url.pathname + url.search;
 
     console.log("gateway calling", { url: url.toString(), newUrl });
 

@@ -51,15 +51,6 @@
             </select>
         </div>
     </div>
-
-    <div class="control">
-        <div class="field-label is-normal">
-            <label class="label">
-                Debug: showing last <u>{data.view.points}</u> points from
-                <u>{data.url}</u>
-            </label>
-        </div>
-    </div>
 </div>
 
 <Line
