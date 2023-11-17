@@ -1,19 +1,13 @@
-import { dev } from '$app/environment';
-import { env } from '$env/dynamic/private';
 import _ from 'lodash';
-import type { RequestHandler } from './$types';
+import type { RequestEvent, RequestHandler } from './$types';
+import { env } from '$lib/server';
 
-export const GET: RequestHandler = async ({ request, url, platform, fetch }) => {
-    let apiServer = "";
-    if (dev) {
-        apiServer = env.API_SERVER;
-    } else {
-        apiServer = platform!.env!.API_SERVER;
-    }
+async function respond({ request, url, platform, fetch }: RequestEvent): Promise<Response> {
+    const apiServer = env(platform, "API_SERVER");
 
     const newUrl = apiServer + url.pathname + url.search;
 
-    console.log("gateway calling", { url: url.toString(), newUrl });
+    console.log("gateway calling", { method: request.method, url: url.toString(), newUrl });
 
     const headers: { [key: string]: string } = {};
     for (const header of request.headers.keys()) {
@@ -21,10 +15,21 @@ export const GET: RequestHandler = async ({ request, url, platform, fetch }) => 
     }
 
     const newRequest = new Request(newUrl, {
-        method: "GET",
+        method: request.method,
         body: request.body,
-        headers: _.pick(headers, "token")
-    });
+        headers: _.pick(headers, "token", "content-type"),
+        duplex: "half", // duplex is a thing: https://github.com/whatwg/fetch/pull/1457
+    } as RequestInit);
 
-    return await fetch(newRequest);
+    const response = await fetch(newRequest);
+
+    return response;
+}
+
+export const GET: RequestHandler = async (requestEvent) => {
+    return respond(requestEvent);
+}
+
+export const POST: RequestHandler = async (requestEvent) => {
+    return respond(requestEvent);
 }

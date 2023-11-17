@@ -7,10 +7,12 @@ declare global {
         // interface PageData {}
 
         interface Platform {
-            env?: {
-                /// URL of main API server, like "http://1.2.3.4:5678"
-                API_SERVER: string;
-            };
+            env?: Env;
+        }
+
+        interface Env {
+            /// URL of main API server, like "http://1.2.3.4:5678"
+            API_SERVER: string;
         }
     }
 
@@ -27,6 +29,21 @@ declare global {
     }
 
     namespace Data {
+        type APIResponse<T> = APIUnexpectedResponse | APINormalResponse<T>;
+
+        interface APIUnexpectedResponse {
+            timestamp: string
+            status: number
+            error: string
+            path: string
+        }
+
+        interface APINormalResponse<T> {
+            statusCode: number
+            message: string
+            data: T?
+        }
+
         interface SymbolBrief {
             symbol: string
             price: number
@@ -44,6 +61,15 @@ declare global {
             numberOfTrades: number
             takerBuyBaseAssetVolume: number
             takerBuyQuoteAssetVolume: number
+        }
+
+        interface AuthRequest {
+            login: string,
+            password: string,
+        }
+
+        interface AuthResponse {
+            token: string
         }
     }
 }
