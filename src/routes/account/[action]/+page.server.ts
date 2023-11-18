@@ -30,7 +30,7 @@ async function authAction(path: string, successMessage: string, { request, cooki
         const apiResponse = await api<Data.AuthRequest, Data.AuthResponse>(fetch, "POST", "auth/" + path, {
             login: login,
             password
-        }, null);
+        }, null, null);
 
         const token = apiResponse.data?.token;
         logSensitive("got", { token });
