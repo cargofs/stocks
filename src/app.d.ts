@@ -59,6 +59,25 @@ declare global {
             price: number
         }
 
+        interface SymbolStats {
+            priceChange: number
+            priceChangePercent: number
+            weightedAvgPrice: number
+            prevClosePrice: number
+            lastPrice: number
+            bidPrice: number
+            askPrice: number
+            openPrice: number
+            highPrice: number
+            lowPrice: number
+            volume: number
+            openTime: number
+            closeTime: number
+            firstId: number
+            lastId: number
+            count: number
+        }
+
         interface PricePoint {
             openTime: number
             open: number

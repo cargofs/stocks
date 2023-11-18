@@ -2,49 +2,79 @@
     import { Line } from "svelte-chartjs";
     import "chart.js/auto";
     import "chartjs-adapter-luxon";
-
     import { DateTime } from "luxon";
+    import _ from "lodash";
 
     import type { PageData } from "./$types";
     import { goto } from "$app/navigation";
 
+    import { formatPercentage, formatUSD } from "$lib";
     import { priceViews } from "$lib/priceViews";
 
-    import _ from "lodash";
-
     export let data: PageData;
+
+    let showPercent = true;
+    function toggleShowPercent() {
+        showPercent = !showPercent;
+    }
 </script>
 
-<div class="field is-grouped">
-    <div class="control">
-        <div class="select">
-            <select
-                value={data.symbol}
-                on:input={async (ev) => {
-                    const symbol = ev.currentTarget.value;
-                    await goto(`/prices/${symbol}/${data.view.name}`);
-                }}
-            >
-                {#each data.symbols as symbol}
-                    <option value={symbol}>{symbol}</option>
-                {/each}
-            </select>
+<div class="level">
+    <div class="level-left">
+        <div class="level-item">
+            <div class="control">
+                <div class="select">
+                    <select
+                        value={data.symbol}
+                        on:input={async (ev) => {
+                            const symbol = ev.currentTarget.value;
+                            await goto(`/prices/${symbol}/${data.view.name}`);
+                        }}
+                    >
+                        {#each data.symbols as symbol}
+                            <option value={symbol}>{symbol}</option>
+                        {/each}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="level-item">
+            <div class="control">
+                <div class="select">
+                    <select
+                        value={data.view.name}
+                        on:input={async (ev) => {
+                            const viewName = ev.currentTarget.value;
+                            await goto(`/prices/${data.symbol}/${viewName}`);
+                        }}
+                    >
+                        {#each priceViews.map((view) => view.name) as viewName}
+                            <option value={viewName}>{viewName}</option>
+                        {/each}
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="control">
-        <div class="select">
-            <select
-                value={data.view.name}
-                on:input={async (ev) => {
-                    const viewName = ev.currentTarget.value;
-                    await goto(`/prices/${data.symbol}/${viewName}`);
-                }}
-            >
-                {#each priceViews.map((view) => view.name) as viewName}
-                    <option value={viewName}>{viewName}</option>
-                {/each}
-            </select>
+    <div class="level-right">
+        <div
+            class="level-item has-text-right cursor-pointer"
+            on:click={toggleShowPercent}
+            on:keypress={toggleShowPercent}
+        >
+            <div>
+                <p class="heading">За последние 24ч</p>
+                <p class="title">
+                    {showPercent
+                        ? formatPercentage(
+                              data.last24hStats.priceChangePercent,
+                              true
+                          )
+                        : formatUSD(data.last24hStats.priceChange, true)}
+                </p>
+            </div>
         </div>
     </div>
 </div>
@@ -80,7 +110,7 @@
             y: {
                 ticks: {
                     callback: function (value, index, ticks) {
-                        return "$" + value.toLocaleString();
+                        return formatUSD(value, false);
                     },
                 },
             },
@@ -95,7 +125,7 @@
                             label += ": ";
                         }
                         if (context.parsed.y !== null) {
-                            label += "$" + context.parsed.y.toLocaleString();
+                            label += formatUSD(context.parsed.y, false);
                         }
                         return label;
                     },

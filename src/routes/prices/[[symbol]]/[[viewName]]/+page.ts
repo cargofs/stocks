@@ -3,11 +3,11 @@ import _ from 'lodash';
 import type { PageLoad } from './$types';
 
 import { priceViews } from "$lib/priceViews";
-import { plainAPI } from '$lib';
+import { DEFAULT_SYMBOL, plainAPI } from '$lib';
 import { error } from '@sveltejs/kit';
 
 export const load = (async ({ fetch, params, parent }) => {
-    const symbol = params.symbol ?? "BTC";
+    const symbol = params.symbol ?? DEFAULT_SYMBOL;
 
     const viewName = params.viewName ?? priceViews[0].name;
     const view = priceViews.find(view => view.name == viewName)!;

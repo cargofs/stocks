@@ -2,6 +2,8 @@ import { dev } from '$app/environment';
 import { error, fail } from '@sveltejs/kit';
 import _ from 'lodash';
 
+export const DEFAULT_SYMBOL = "BTC";
+
 export enum CookieName {
     SESSION = "SESSION",
     DISPLAY_USERNAME = "DISPLAY_USERNAME"
@@ -65,4 +67,48 @@ export function logSensitive(...data: unknown[]) {
     if (dev) {
         console.log(...data);
     }
+}
+
+function cleanNumber(value: string | number | undefined): number | undefined {
+    let numberValue: number | undefined;
+
+    if (typeof value == "string") {
+        numberValue = Number(value);
+    } else {
+        numberValue = value;
+    }
+
+    return numberValue;
+}
+
+export function formatPercentage(value: string | number | undefined, signForPositive: boolean): string {
+    const numberValue = cleanNumber(value);
+
+    if (numberValue === undefined) {
+        return "??? %"
+    }
+
+    const format = Intl.NumberFormat("ru", {
+        signDisplay: signForPositive ? "exceptZero" : "auto",
+        style: "percent",
+        maximumFractionDigits: 2
+    });
+
+    return format.format(numberValue / 100);
+}
+
+export function formatUSD(value: string | number | undefined, signForPositive: boolean): string {
+    const numberValue = cleanNumber(value);
+
+    if (numberValue === undefined) {
+        return "??? $"
+    }
+
+    const format = Intl.NumberFormat("ru", {
+        signDisplay: signForPositive ? "exceptZero" : "auto",
+        style: "currency",
+        currency: "USD"
+    });
+
+    return format.format(numberValue);
 }
