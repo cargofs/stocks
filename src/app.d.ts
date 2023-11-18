@@ -1,8 +1,10 @@
-// See https://kit.svelte.dev/docs/types#app
-// for information about these interfaces
+import type { APIStatusCode } from '$lib'
+
 declare global {
     namespace App {
-        // interface Error {}
+        interface Error {
+            apiStatusCode?: APIStatusCode
+        }
 
         interface Locals {
             token?: string

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     import { goto, invalidateAll } from "$app/navigation";
+    import { APIStatusCode } from "$lib";
     import type { PageData } from "./$types";
 
     export let data: PageData;
@@ -12,6 +13,8 @@
     const pattern = "^[a-zA-Z0-9]{1,32}$";
     $: loginOk = (login.match(pattern)?.length ?? 0) > 0;
     $: passwordOk = (password.match(pattern)?.length ?? 0) > 0;
+
+    let knownTakenLogins: string[] = [];
 </script>
 
 <div class="content">
@@ -35,7 +38,7 @@
 <form
     method="POST"
     use:enhance={() => {
-        return async ({ result }) => {
+        return async ({ result, update }) => {
             console.log(result);
             await invalidateAll();
 
@@ -45,6 +48,15 @@
                 } else {
                     await goto("/");
                 }
+            } else if (result.type === "error") {
+                if (
+                    result.error?.apiStatusCode ==
+                    APIStatusCode.LOGIN_ALREADY_EXIST
+                ) {
+                    knownTakenLogins = [...knownTakenLogins, login];
+                }
+            } else {
+                update();
             }
         };
     }}
@@ -66,6 +78,8 @@
         </p>
         {#if login.length > 0 && !loginOk}
             <p class="help is-danger">Только a-z, A-Z, 0-9</p>
+        {:else if data.action == "create" && knownTakenLogins.includes(login)}
+            <p class="help is-danger">Данное имя уже занято</p>
         {/if}
     </div>
 
@@ -137,7 +151,8 @@
                     !passwordOk ||
                     (data.action == "create" &&
                         (passwordAgain.length == 0 ||
-                            password != passwordAgain))}
+                            password != passwordAgain ||
+                            knownTakenLogins.includes(login)))}
             >
                 {data.action == "login" ? "Войти" : "Зарегистрироваться"}
             </button>

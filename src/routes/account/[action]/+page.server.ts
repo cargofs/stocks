@@ -1,6 +1,6 @@
-import { fail } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
-import { CookieName, logSensitive } from '$lib';
+import { APIStatusCode, CookieName, logSensitive } from '$lib';
 import { dev } from '$app/environment';
 import { api } from '$lib/server/api';
 
@@ -26,25 +26,24 @@ async function authAction(path: string, successMessage: string, { request, cooki
         return fail(400, { error: "Не указано имя пользователя или пароль" });
     }
 
-    try {
-        const apiResponse = await api<Data.AuthRequest, Data.AuthResponse>(fetch, "POST", "auth/" + path, {
-            login: login,
-            password
-        }, null, null);
+    const apiResponse = await api<Data.AuthRequest, Data.AuthResponse>(fetch, "POST", "auth/" + path, {
+        login: login,
+        password
+    }, null, null);
 
-        const token = apiResponse.data?.token;
-        logSensitive("got", { token });
+    const token = apiResponse.data?.token;
+    logSensitive("got", { token });
 
-        if (token) {
-            cookies.set(CookieName.SESSION, token, { path: "/", secure: !dev });
-            console.log("cookie set");
-            return { message: successMessage };
-        } else {
-            return fail(500, { error: "Произошла неожиданная ошибка. Попробуйте ещё раз позже" });
-        }
-    } catch (err) {
-        console.log({ err });
-
+    if (token) {
+        cookies.set(CookieName.SESSION, token, { path: "/", secure: !dev });
+        console.log("cookie set");
+        return { message: successMessage };
+    } else if (path == "registration" && apiResponse.statusCode == APIStatusCode.LOGIN_ALREADY_EXIST) {
+        throw error(403, {
+            apiStatusCode: apiResponse.statusCode,
+            message: "Пользователь с данным именем уже существует"
+        });
+    } else {
         return fail(500, { error: "Произошла неожиданная ошибка. Попробуйте ещё раз позже" });
     }
 }
