@@ -4,17 +4,20 @@ import type { PageLoad } from './$types';
 
 import { priceViews } from "$lib/priceViews";
 
-export const load = (async ({ fetch, params }) => {
+export const load = (async ({ fetch, params, parent }) => {
+    console.log("begin load", { params });
+
     const symbol = params.symbol ?? "BTC";
     const view = priceViews.find(view => view.name == params.viewName) ?? priceViews[0];
 
-    const briefResponse = await fetch("/api/v1/coins/prices");
-    const briefs = await briefResponse.json() as Data.SymbolBrief[];
+    const { briefs } = await parent();
 
     const url = `/api/v1/coins/prices/${symbol}?interval=${view.interval}`;
 
     const response = await fetch(url);
     const json = await response.json() as Data.PricePoint[];
+
+    console.log("end load", { params });
 
     return {
         view,
