@@ -6,7 +6,9 @@ import { priceViews } from "$lib/priceViews";
 
 export const load = (async ({ fetch, params, parent }) => {
     const symbol = params.symbol ?? "BTC";
-    const view = priceViews.find(view => view.name == params.viewName) ?? priceViews[0];
+
+    const viewName = params.viewName ?? priceViews[0].name;
+    const view = priceViews.find(view => view.name == viewName)!;
 
     const url = `/api/v1/coins/prices/${symbol}?interval=${view.interval}`;
 

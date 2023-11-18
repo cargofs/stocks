@@ -19,6 +19,7 @@
     <div class="control">
         <div class="select">
             <select
+                value={data.symbol}
                 on:input={async (ev) => {
                     const symbol = ev.currentTarget.value;
                     await goto(`/prices/${symbol}/${data.view.name}`);
@@ -34,6 +35,7 @@
     <div class="control">
         <div class="select">
             <select
+                value={data.view.name}
                 on:input={async (ev) => {
                     const viewName = ev.currentTarget.value;
                     await goto(`/prices/${data.symbol}/${viewName}`);
