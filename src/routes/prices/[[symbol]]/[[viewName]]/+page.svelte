@@ -60,7 +60,7 @@
 
     <div class="level-right">
         <div
-            class="level-item has-text-right cursor-pointer"
+            class="level-item has-text-right is-clickable"
             on:click={toggleShowPercent}
             on:keypress={toggleShowPercent}
         >
