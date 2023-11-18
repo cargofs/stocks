@@ -55,7 +55,7 @@
                 class="input"
                 type="text"
                 placeholder="Имя пользователя"
-                autocomplete="login"
+                autocomplete="username"
                 name="login"
                 {pattern}
                 bind:value={login}
