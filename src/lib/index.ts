@@ -14,37 +14,50 @@ export function notFound() {
 }
 
 export async function api<Req, Res>(fetch: FetchFunction, method: string, path: string, body: Req | null, token: string | null): Promise<Data.APINormalResponse<Res>> {
-    console.log("api calling", { method, path });
-    logSensitive({ body });
+    const normalResponse: Data.APINormalResponse<Res> = await plainAPI(fetch, method, path, body, token);
+    console.log("api status", _.pick(normalResponse, "statusCode", "message"));
+    return normalResponse;
+}
 
-    const headers = {};
+export async function plainAPI<Req, Res>(fetch: FetchFunction, method: string, path: string, body: Req | null, token: string | null): Promise<Res> {
+    console.log("plain api calling", { method, path });
+    logSensitive("...with", { body, token });
+
+    const headers = new Headers();
+    let bodyString: string | undefined = undefined;
+
     if (method == "POST") {
-        headers["content-type"] = "application/json";
+        headers.set("content-type", "application/json");
+        bodyString = JSON.stringify(body);
     }
+
     if (token !== null) {
-        headers["token"] = "token";
+        headers.set("token", token);
     }
 
     const response = await fetch("/api/v1/" + path, {
         method,
-        body: JSON.stringify(body),
-        headers
+        headers,
+        body: bodyString
     });
 
-    const json: Data.APIResponse<Res> = await response.json();
-    logSensitive("api got full", json);
+    const json: Data.APIPlainResponse<Res> = await response.json();
 
     if (isAPIUnexpectedResponse(json)) {
-        console.log("api got", json);
+        console.log("api got 'unexpected' response", json);
         throw fail(500, { error: "APIUnexpectedResponse" });
     } else {
-        console.log("api got", _.pick(json, "statusCode", "message"));
+        if (_.isArray(json) && json.length > 0) {
+            logSensitive(`api got array with ${json.length} items, first item`, json[0]);
+        } else {
+            logSensitive("api got full", json);
+        }
     }
 
     return json;
 }
 
-function isAPIUnexpectedResponse<T>(response: Data.APIResponse<T>): response is Data.APIUnexpectedResponse {
+function isAPIUnexpectedResponse<T>(response: Data.APIResponse<T> | Data.APIPlainResponse<T>): response is Data.APIUnexpectedResponse {
     return (response as Data.APIUnexpectedResponse).timestamp !== undefined;
 }
 

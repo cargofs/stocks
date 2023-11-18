@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import type { RequestEvent, RequestHandler } from './$types';
 import { env } from '$lib/server';
 

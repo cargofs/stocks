@@ -39,6 +39,7 @@ declare global {
 
     namespace Data {
         type APIResponse<T> = APIUnexpectedResponse | APINormalResponse<T>;
+        type APIPlainResponse<T> = APIUnexpectedResponse | T;
 
         interface APIUnexpectedResponse {
             timestamp: string
