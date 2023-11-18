@@ -5,8 +5,26 @@ import _ from 'lodash';
 export const DEFAULT_SYMBOL = "BTC";
 
 export enum CookieName {
-    SESSION = "SESSION",
-    DISPLAY_USERNAME = "DISPLAY_USERNAME"
+    SESSION = "SESSION"
+}
+
+export enum APIStatusCode {
+    SUCCESS = 0,
+
+    INTERNAL_SERVER_ERROR = 1000,
+
+    TOKEN_HEADER_NOT_FOUND = 1101,
+    WRONG_TOKEN = 1102,
+    TOKEN_EXPIRED_NEED_LOGIN = 1103,
+    WRONG_LOGIN_OR_PASSWORD = 1104,
+    LOGIN_ALREADY_EXIST = 1105,
+
+    VALIDATION_ERROR = 1200,
+    VALIDATION_ERROR_USD = 1201,
+    VALIDATION_ERROR_ASSETS = 1202,
+
+    NOT_FOUND = 1301,
+    LACK_OF_RESOURCES = 1302,
 }
 
 type FetchFunction = (input: URL | RequestInfo, init?: RequestInit | undefined) => Promise<Response>;

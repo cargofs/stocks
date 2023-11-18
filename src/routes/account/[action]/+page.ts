@@ -8,6 +8,7 @@ export const load: PageLoad = async ({ params, url }) => {
 
     return {
         action: params.action,
-        continue: url.searchParams.get("continue")
+        continue: url.searchParams.get("continue"),
+        forcedLogout: url.searchParams.get("forcedLogout")
     }
 };

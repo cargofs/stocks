@@ -36,8 +36,7 @@ async function authAction(path: string, successMessage: string, { request, cooki
 
         if (token) {
             cookies.set(CookieName.SESSION, token, { path: "/", secure: !dev });
-            cookies.set(CookieName.DISPLAY_USERNAME, username, { path: "/", secure: !dev });
-            console.log("cookies set");
+            console.log("cookie set");
             return { message: successMessage };
         } else {
             return fail(500, { error: "Произошла неожиданная ошибка. Попробуйте ещё раз позже" });

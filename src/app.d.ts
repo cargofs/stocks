@@ -3,11 +3,15 @@
 declare global {
     namespace App {
         // interface Error {}
-        // interface Locals {}
+
+        interface Locals {
+            token?: string
+        }
 
         interface PageData {
+            id?: number
             username?: string
-            token?: string
+            money?: number
         }
 
         interface Platform {
@@ -49,7 +53,7 @@ declare global {
         }
 
         interface APINormalResponse<T> {
-            statusCode: number
+            statusCode: APIStatusCode
             message: string
             data: T?
         }
@@ -99,6 +103,13 @@ declare global {
 
         interface AuthResponse {
             token: string
+        }
+
+        interface WhoAmIResponse {
+            id: number
+            login: string
+            token: string
+            money: number
         }
     }
 }
