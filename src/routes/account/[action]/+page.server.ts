@@ -1,6 +1,6 @@
 import { fail } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
-import { SESSION_COOKIE_NAME, api, logSensitive } from '$lib';
+import { CookieName, api, logSensitive } from '$lib';
 import { dev } from '$app/environment';
 
 export const actions = {
@@ -35,8 +35,9 @@ async function authAction(path: string, successMessage: string, { request, cooki
         logSensitive("got", { token });
 
         if (token) {
-            cookies.set(SESSION_COOKIE_NAME, token, { path: "/", secure: !dev });
-            console.log("cookie set");
+            cookies.set(CookieName.SESSION, token, { path: "/", secure: !dev });
+            cookies.set(CookieName.DISPLAY_USERNAME, username, { path: "/", secure: !dev });
+            console.log("cookies set");
             return { message: successMessage };
         } else {
             return fail(500, { error: "Произошла неожиданная ошибка. Попробуйте ещё раз позже" });

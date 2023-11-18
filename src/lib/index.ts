@@ -2,7 +2,10 @@ import { dev } from '$app/environment';
 import { error, fail } from '@sveltejs/kit';
 import _ from 'lodash';
 
-export const SESSION_COOKIE_NAME = "SESSION";
+export enum CookieName {
+    SESSION = "SESSION",
+    DISPLAY_USERNAME = "DISPLAY_USERNAME"
+}
 
 type FetchFunction = (input: URL | RequestInfo, init?: RequestInit | undefined) => Promise<Response>;
 
@@ -10,16 +13,22 @@ export function notFound() {
     return error(404, "Not Found");
 }
 
-export async function api<Req, Res>(fetch: FetchFunction, method: string, path: string, body: Req | null): Promise<Data.APINormalResponse<Res>> {
+export async function api<Req, Res>(fetch: FetchFunction, method: string, path: string, body: Req | null, token: string | null): Promise<Data.APINormalResponse<Res>> {
     console.log("api calling", { method, path });
     logSensitive({ body });
+
+    const headers = {};
+    if (method == "POST") {
+        headers["content-type"] = "application/json";
+    }
+    if (token !== null) {
+        headers["token"] = "token";
+    }
 
     const response = await fetch("/api/v1/" + path, {
         method,
         body: JSON.stringify(body),
-        headers: {
-            "content-type": "application/json"
-        }
+        headers
     });
 
     const json: Data.APIResponse<Res> = await response.json();
