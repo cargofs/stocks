@@ -5,8 +5,6 @@ import type { PageLoad } from './$types';
 import { priceViews } from "$lib/priceViews";
 
 export const load = (async ({ fetch, params, parent }) => {
-    console.log("begin load", { params });
-
     const symbol = params.symbol ?? "BTC";
     const view = priceViews.find(view => view.name == params.viewName) ?? priceViews[0];
 
@@ -14,8 +12,6 @@ export const load = (async ({ fetch, params, parent }) => {
 
     const response = await fetch(url);
     const json = await response.json() as Data.PricePoint[];
-
-    console.log("end load", { params });
 
     const { briefs } = await parent();
 
