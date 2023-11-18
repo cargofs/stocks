@@ -113,6 +113,26 @@ declare global {
             token: string
             money: number
         }
+
+        interface LeaderboardResponse {
+            userScoreList: UserScore[]
+        }
+
+        interface UserScore {
+            login: string
+            changeCost: {
+                spentUsd: number
+                costUsd: number
+                percent: number
+            }
+        }
+
+        interface UserScoreFlat {
+            login: string
+            spentUsd: number
+            costUsd: number
+            percent: number
+        }
     }
 }
 

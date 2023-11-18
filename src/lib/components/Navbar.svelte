@@ -7,6 +7,7 @@
 
     $: targets = [
         { path: "/prices", name: "Курсы валют" },
+        { path: "/leaderboard", name: "Таблица лидеров" },
         {
             name: login == undefined ? "Учётная запись" : login,
             inner: [
