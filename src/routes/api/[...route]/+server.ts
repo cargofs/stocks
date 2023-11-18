@@ -9,17 +9,7 @@ async function respond({ request, url, platform, fetch }: RequestEvent): Promise
 
     console.log("gateway calling", { method: request.method, url: url.toString(), newUrl });
 
-    const headers: { [key: string]: string } = {};
-    for (const header of request.headers.keys()) {
-        headers[header] = request.headers.get(header)!;
-    }
-
-    const newRequest = new Request(newUrl, {
-        method: request.method,
-        body: request.body,
-        headers: _.pick(headers, "token", "content-type"),
-        duplex: "half", // duplex is a thing: https://github.com/whatwg/fetch/pull/1457
-    } as RequestInit);
+    const newRequest = new Request(newUrl, request);
 
     const response = await fetch(newRequest);
 
