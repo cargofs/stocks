@@ -1,12 +1,21 @@
-import { logSensitive } from '$lib';
-import { fail } from '@sveltejs/kit';
+import { APIStatusCode, CookieName, logSensitive } from '$lib';
+import { fail, type Cookies, redirect } from '@sveltejs/kit';
 import _ from 'lodash';
 
 type FetchFunction = (input: URL | RequestInfo, init?: RequestInit | undefined) => Promise<Response>;
 
-export async function api<Req, Res>(fetch: FetchFunction, method: string, path: string, body: Req | null, token: string | null): Promise<Data.APINormalResponse<Res>> {
+export async function api<Req, Res>(fetch: FetchFunction, method: string, path: string, body: Req | null, token: string | null, handleInvalidToken: { cookies: Cookies, url: URL } | null): Promise<Data.APINormalResponse<Res>> {
     const normalResponse: Data.APINormalResponse<Res> = await plainAPI(fetch, method, path, body, token);
+
     console.log("api status", _.pick(normalResponse, "statusCode", "message"));
+
+    if (handleInvalidToken && [APIStatusCode.WRONG_TOKEN, APIStatusCode.TOKEN_EXPIRED_NEED_LOGIN].includes(normalResponse.statusCode)) {
+        handleInvalidToken.cookies.delete(CookieName.SESSION);
+        console.log("cookie deleted");
+
+        throw redirect(303, `account/login?continue=${handleInvalidToken.url.pathname}&forcedLogout=1`);
+    }
+
     return normalResponse;
 }
 
