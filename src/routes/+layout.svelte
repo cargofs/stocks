@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount, setContext } from "svelte";
-    import Navbar from "./Navbar.svelte";
+    import Navbar from "$lib/components/Navbar.svelte";
     import { writable, type Writable } from "svelte/store";
 
     const pageTitleParts: Writable<string[]> = writable();

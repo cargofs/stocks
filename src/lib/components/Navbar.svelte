@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import NavbarItem from "./NavbarItem.svelte";
+    import NavbarItem from "$lib/components/NavbarItem.svelte";
     import _ from "lodash";
 
     let targets: Target[] = [
