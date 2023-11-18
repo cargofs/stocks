@@ -13,21 +13,16 @@
     import _ from "lodash";
 
     export let data: PageData;
-
-    let currentSymbol = data.symbol;
-    let currentViewName = data.view.name;
-
-    async function symbolOrViewNameChanged() {
-        await goto(`/prices/${currentSymbol}/${currentViewName}`);
-    }
 </script>
 
 <div class="field is-grouped">
     <div class="control">
         <div class="select">
             <select
-                bind:value={currentSymbol}
-                on:change={symbolOrViewNameChanged}
+                on:input={async (ev) => {
+                    const symbol = ev.currentTarget.value;
+                    await goto(`/prices/${symbol}/${data.view.name}`);
+                }}
             >
                 {#each data.symbols as symbol}
                     <option value={symbol}>{symbol}</option>
@@ -39,8 +34,10 @@
     <div class="control">
         <div class="select">
             <select
-                bind:value={currentViewName}
-                on:change={symbolOrViewNameChanged}
+                on:input={async (ev) => {
+                    const viewName = ev.currentTarget.value;
+                    await goto(`/prices/${data.symbol}/${viewName}`);
+                }}
             >
                 {#each priceViews.map((view) => view.name) as viewName}
                     <option value={viewName}>{viewName}</option>
