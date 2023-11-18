@@ -1,7 +1,8 @@
 import type { LayoutServerLoad } from './$types';
 
-import { APIStatusCode, CookieName, api } from '$lib';
+import { APIStatusCode, CookieName } from '$lib';
 import { fail, redirect } from '@sveltejs/kit';
+import { api } from '$lib/server/api';
 
 export const load: LayoutServerLoad = (async ({ locals, fetch, url, cookies }) => {
     if (!locals.token) {

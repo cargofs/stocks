@@ -1,9 +1,10 @@
 import _ from 'lodash';
 
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
+import { DEFAULT_SYMBOL } from '$lib';
 import { priceViews } from "$lib/priceViews";
-import { DEFAULT_SYMBOL, plainAPI } from '$lib';
+import { plainAPI } from '$lib/server/api';
 import { error } from '@sveltejs/kit';
 
 export const load = (async ({ fetch, params, parent }) => {
@@ -27,4 +28,4 @@ export const load = (async ({ fetch, params, parent }) => {
     } else {
         throw error(500, "Произошла неожиданная ошибка. Попробуйте ещё раз позже");
     }
-}) satisfies PageLoad;
+}) satisfies PageServerLoad;

@@ -1,6 +1,6 @@
-import { plainAPI } from '$lib';
+import { plainAPI } from '$lib/server/api';
 import { error } from '@sveltejs/kit';
-import type { LayoutLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
 
 export const load = (async ({ fetch }) => {
     const briefs: Data.SymbolBrief[] = await plainAPI(fetch, "GET", "coins/prices", null, null);
@@ -10,4 +10,4 @@ export const load = (async ({ fetch }) => {
     } else {
         throw error(500, "Произошла неожиданная ошибка. Попробуйте ещё раз позже");
     }
-}) satisfies LayoutLoad;
+}) satisfies LayoutServerLoad;

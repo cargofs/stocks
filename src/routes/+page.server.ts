@@ -1,4 +1,5 @@
-import { APIStatusCode, CookieName, api } from '$lib';
+import { APIStatusCode, CookieName } from '$lib';
+import { api } from '$lib/server/api';
 import { fail, type Actions } from '@sveltejs/kit';
 
 export const actions = {

@@ -1,7 +1,8 @@
 import { fail } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
-import { CookieName, api, logSensitive } from '$lib';
+import { CookieName, logSensitive } from '$lib';
 import { dev } from '$app/environment';
+import { api } from '$lib/server/api';
 
 export const actions = {
     create: async (requestEvent) => {

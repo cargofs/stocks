@@ -1,6 +1,7 @@
-import { DEFAULT_SYMBOL, plainAPI } from '$lib';
+import { DEFAULT_SYMBOL } from '$lib';
+import { plainAPI } from '$lib/server/api';
 import { error } from '@sveltejs/kit';
-import type { LayoutLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
 
 export const load = (async ({ fetch, params }) => {
     const symbol = params.symbol ?? DEFAULT_SYMBOL;
@@ -11,4 +12,4 @@ export const load = (async ({ fetch, params }) => {
     } else {
         throw error(500, "Произошла неожиданная ошибка. Попробуйте ещё раз позже");
     }
-}) satisfies LayoutLoad;
+}) satisfies LayoutServerLoad;
