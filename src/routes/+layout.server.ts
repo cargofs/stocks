@@ -16,7 +16,7 @@ export const load: LayoutServerLoad = (async ({ locals, fetch, url, cookies }) =
 
         return {
             id,
-            username: login,
+            login,
             money
         };
     } else if ([APIStatusCode.WRONG_TOKEN, APIStatusCode.TOKEN_EXPIRED_NEED_LOGIN].includes(whoami.statusCode)) {

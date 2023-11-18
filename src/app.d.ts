@@ -10,7 +10,7 @@ declare global {
 
         interface PageData {
             id?: number
-            username?: string
+            login?: string
             money?: number
         }
 

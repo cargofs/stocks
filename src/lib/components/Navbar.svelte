@@ -3,27 +3,27 @@
     import NavbarItem from "$lib/components/NavbarItem.svelte";
     import _ from "lodash";
 
-    $: username = $page.data.username;
+    $: login = $page.data.login;
 
     $: targets = [
         { path: "/prices", name: "Курсы валют" },
         {
-            name: username == undefined ? "Учётная запись" : username,
+            name: login == undefined ? "Учётная запись" : login,
             inner: [
                 {
                     path: "/account/create",
                     name: "Зарегистрироваться",
-                    condition: username == undefined,
+                    condition: login == undefined,
                 },
                 {
                     path: "/account/login",
                     name: "Войти",
-                    condition: username == undefined,
+                    condition: login == undefined,
                 },
                 {
                     logout: true,
                     name: "Выйти",
-                    condition: username != undefined,
+                    condition: login != undefined,
                     preload: false,
                 },
             ],

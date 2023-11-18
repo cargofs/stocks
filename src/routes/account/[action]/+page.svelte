@@ -5,12 +5,12 @@
 
     export let data: PageData;
 
-    let username = "";
+    let login = "";
     let password = "";
     let passwordAgain = "";
 
     const pattern = "^[a-zA-Z0-9]{1,32}$";
-    $: usernameOk = (username.match(pattern)?.length ?? 0) > 0;
+    $: loginOk = (login.match(pattern)?.length ?? 0) > 0;
     $: passwordOk = (password.match(pattern)?.length ?? 0) > 0;
 </script>
 
@@ -55,16 +55,16 @@
                 class="input"
                 type="text"
                 placeholder="Имя пользователя"
-                autocomplete="username"
-                name="username"
+                autocomplete="login"
+                name="login"
                 {pattern}
-                bind:value={username}
+                bind:value={login}
             />
             <span class="icon is-small is-left">
                 <i class="fas fa-user" />
             </span>
         </p>
-        {#if username.length > 0 && !usernameOk}
+        {#if login.length > 0 && !loginOk}
             <p class="help is-danger">Только a-z, A-Z, 0-9</p>
         {/if}
     </div>
@@ -131,8 +131,8 @@
                 class="button is-danger"
                 formaction={data.action == "login" ? "?/login" : "?/create"}
                 type="submit"
-                disabled={username.length == 0 ||
-                    !usernameOk ||
+                disabled={login.length == 0 ||
+                    !loginOk ||
                     password.length == 0 ||
                     !passwordOk ||
                     (data.action == "create" &&

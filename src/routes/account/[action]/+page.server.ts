@@ -15,19 +15,19 @@ export const actions = {
 async function authAction(path: string, successMessage: string, { request, cookies, fetch }: RequestEvent) {
     const data = await request.formData();
 
-    const username = data.get("username") as string | null;
+    const login = data.get("login") as string | null;
     const password = data.get("password") as string | null;
 
-    console.log("account", { path, username });
+    console.log("account", { path, login });
     logSensitive({ password });
 
-    if (!username || !password) {
+    if (!login || !password) {
         return fail(400, { error: "Не указано имя пользователя или пароль" });
     }
 
     try {
         const apiResponse = await api<Data.AuthRequest, Data.AuthResponse>(fetch, "POST", "auth/" + path, {
-            login: username,
+            login: login,
             password
         }, null);
 
