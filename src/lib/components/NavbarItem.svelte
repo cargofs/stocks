@@ -3,13 +3,20 @@
     import { getContext } from "svelte";
     import type { Writable } from "svelte/store";
     import _ from "lodash";
+    import { goto, invalidateAll } from "$app/navigation";
 
     export let target: TargetMod;
 
     const pageTitleParts: Writable<string[]> = getContext("pageTitleParts");
 
-    function updateTitle() {
+    async function click() {
         pageTitleParts.set(target.nameParts);
+
+        if (target.logout) {
+            await fetch("/?/logout", { method: "POST", body: "" });
+            await invalidateAll();
+            await goto("/");
+        }
     }
 </script>
 
@@ -22,8 +29,8 @@
         target.path != "/" &&
         $page.url.pathname.startsWith(target.path)) ||
         target.path == $page.url.pathname}
-    href={target.path}
-    on:click={target.inner ? null : updateTitle}
+    href={target.logout ? null : target.path}
+    on:click={target.inner ? null : click}
 >
     {#if target.inner}
         <a class="navbar-link">{_.last(target.nameParts)}</a>

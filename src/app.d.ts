@@ -4,7 +4,10 @@ declare global {
     namespace App {
         // interface Error {}
         // interface Locals {}
-        // interface PageData {}
+
+        interface PageData {
+            username?: string
+        }
 
         interface Platform {
             env?: Env;
@@ -20,12 +23,17 @@ declare global {
         path?: string;
         name: string;
         inner?: Target[];
+        condition?: boolean;
+        preload?: boolean;
+        logout?: boolean;
     }
 
     interface TargetMod {
         path?: string;
         nameParts: string[];
         inner?: TargetMod[];
+        preload?: boolean;
+        logout?: boolean;
     }
 
     namespace Data {

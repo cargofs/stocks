@@ -3,14 +3,29 @@
     import NavbarItem from "$lib/components/NavbarItem.svelte";
     import _ from "lodash";
 
-    let targets: Target[] = [
+    $: username = $page.data.username;
+
+    $: targets = [
         { path: "/prices", name: "Курсы валют" },
         {
-            name: "Учётная запись",
+            name: username == undefined ? "Учётная запись" : username,
             inner: [
-                { path: "/account/create", name: "Зарегистрироваться" },
-                { path: "/account/login", name: "Войти" },
-                { path: "/account/logout", name: "Выйти" },
+                {
+                    path: "/account/create",
+                    name: "Зарегистрироваться",
+                    condition: username == undefined,
+                },
+                {
+                    path: "/account/login",
+                    name: "Войти",
+                    condition: username == undefined,
+                },
+                {
+                    logout: true,
+                    name: "Выйти",
+                    condition: username != undefined,
+                    preload: false,
+                },
             ],
         },
     ];
@@ -19,9 +34,15 @@
         let mods: TargetMod[] = [];
 
         for (let target of targets) {
+            if (_.has(target, "condition")) {
+                if (!target.condition) {
+                    continue;
+                }
+            }
+
             let mod: TargetMod = {
-                nameParts: prefix.concat([target.name]),
-                ..._.pick(target, "name", "path"),
+                nameParts: prefix.concat(target.name),
+                ..._.pick(target, "path", "preload", "logout", "disabled"),
             };
 
             if (target.inner) {
@@ -34,7 +55,7 @@
         return mods;
     }
 
-    let targetsMod = modTargets(targets);
+    $: targetsMod = modTargets(targets);
 
     let navbarExpanded = false;
 </script>
