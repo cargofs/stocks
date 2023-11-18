@@ -2,11 +2,11 @@ import _ from 'lodash';
 
 import type { PageLoad } from './$types';
 
-import { views } from "./views";
+import { priceViews } from "$lib/priceViews";
 
 export const load = (async ({ fetch, params }) => {
     const symbol = params.symbol ?? "BTC";
-    const view = views.find(view => view.name == params.viewName) ?? views[0];
+    const view = priceViews.find(view => view.name == params.viewName) ?? priceViews[0];
 
     const briefResponse = await fetch("/api/v1/coins/prices");
     const briefs = await briefResponse.json() as Data.SymbolBrief[];

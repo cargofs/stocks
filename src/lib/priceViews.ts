@@ -1,4 +1,4 @@
-export const views: {
+export const priceViews: {
     name: string,
     interval: string,
     points: number,

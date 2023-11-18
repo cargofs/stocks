@@ -8,7 +8,7 @@
     import type { PageData } from "./$types";
     import { goto } from "$app/navigation";
 
-    import { views } from "./views";
+    import { priceViews } from "$lib/priceViews";
 
     import _ from "lodash";
 
@@ -42,7 +42,7 @@
                 bind:value={currentViewName}
                 on:change={symbolOrViewNameChanged}
             >
-                {#each views.map((view) => view.name) as viewName}
+                {#each priceViews.map((view) => view.name) as viewName}
                     <option value={viewName}>{viewName}</option>
                 {/each}
             </select>
