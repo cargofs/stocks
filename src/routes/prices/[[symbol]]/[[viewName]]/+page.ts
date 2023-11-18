@@ -10,14 +10,14 @@ export const load = (async ({ fetch, params, parent }) => {
     const symbol = params.symbol ?? "BTC";
     const view = priceViews.find(view => view.name == params.viewName) ?? priceViews[0];
 
-    const { briefs } = await parent();
-
     const url = `/api/v1/coins/prices/${symbol}?interval=${view.interval}`;
 
     const response = await fetch(url);
     const json = await response.json() as Data.PricePoint[];
 
     console.log("end load", { params });
+
+    const { briefs } = await parent();
 
     return {
         view,
