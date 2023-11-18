@@ -64,7 +64,7 @@
     <div class="field">
         <p class="control has-icons-left has-icons-right">
             <input
-                class="input"
+                class="input is-danger"
                 type="text"
                 placeholder="Имя пользователя"
                 autocomplete="username"
@@ -86,7 +86,7 @@
     <div class="field">
         <p class="control has-icons-left">
             <input
-                class="input"
+                class="input is-danger"
                 type="password"
                 placeholder="Пароль"
                 name="password"
@@ -106,7 +106,7 @@
         <div class="field">
             <p class="control has-icons-left">
                 <input
-                    class="input"
+                    class="input is-danger"
                     type="password"
                     placeholder="Пароль (ещё раз)"
                     name="passwordAgain"
@@ -126,12 +126,14 @@
     <p class="block">
         {#if data.action == "login"}
             Нет учётной записи? <a
+                class="has-text-danger"
                 href={data.continue
                     ? `/account/create?continue=${data.continue}`
                     : `/account/create`}>Зарегистрироваться</a
             >
         {:else}
             Уже есть учётная запись? <a
+                class="has-text-danger"
                 href={data.continue
                     ? `/account/login?continue=${data.continue}`
                     : `/account/login`}>Войти</a

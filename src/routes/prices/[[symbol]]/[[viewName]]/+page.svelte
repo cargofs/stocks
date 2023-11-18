@@ -23,7 +23,7 @@
     <div class="level-left">
         <div class="level-item">
             <div class="control">
-                <div class="select">
+                <div class="select is-danger">
                     <select
                         value={data.symbol}
                         on:input={async (ev) => {
@@ -41,7 +41,7 @@
 
         <div class="level-item">
             <div class="control">
-                <div class="select">
+                <div class="select is-danger">
                     <select
                         value={data.view.name}
                         on:input={async (ev) => {

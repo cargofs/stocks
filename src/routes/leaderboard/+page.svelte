@@ -80,7 +80,11 @@
             </thead>
             <tbody>
                 {#each sortedLeaderboard as userScoreFlat}
-                    <tr class:is-selected={userScoreFlat.login == data.login}>
+                    <tr
+                        class:has-background-danger={userScoreFlat.login ==
+                            data.login}
+                        class:has-text-white={userScoreFlat.login == data.login}
+                    >
                         <td>{userScoreFlat.login}</td>
                         <td>{formatUSD(userScoreFlat.spentUsd, false)}</td>
                         <td>{formatUSD(userScoreFlat.costUsd, false)}</td>
