@@ -32,7 +32,7 @@ export function notFound() {
 
 export function logSensitive(...data: unknown[]) {
     if (dev) {
-        console.log(...data);
+        console.debug("[dev]", ...data);
     }
 }
 

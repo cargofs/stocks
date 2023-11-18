@@ -20,7 +20,7 @@ async function authAction(path: string, successMessage: string, { request, cooki
     const password = data.get("password") as string | null;
 
     console.log("account", { path, login });
-    logSensitive({ password });
+    logSensitive("...with", { password });
 
     if (!login || !password) {
         return fail(400, { error: "Не указано имя пользователя или пароль" });
