@@ -13,7 +13,7 @@ export async function api<Req, Res>(fetch: FetchFunction, method: string, path: 
         handleInvalidToken.cookies.delete(CookieName.SESSION);
         console.log("cookie deleted");
 
-        throw redirect(303, `account/login?continue=${handleInvalidToken.url.pathname}&forcedLogout=1`);
+        throw redirect(303, `/account/login?continue=${handleInvalidToken.url.pathname}&forcedLogout=1`);
     }
 
     return normalResponse;
