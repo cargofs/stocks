@@ -90,7 +90,10 @@
                 label: "Открытие",
                 data: _.concat(
                     data.prices.map((point) => point.open),
-                    [data.price ?? 0]
+                    [
+                        data.briefs.find((brief) => brief.symbol == data.symbol)
+                            ?.price ?? 0,
+                    ]
                 ),
                 fill: true,
                 borderColor: "#f14668",

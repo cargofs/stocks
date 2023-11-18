@@ -6,7 +6,10 @@ export const load = (async ({ fetch }) => {
     const briefs: Data.SymbolBrief[] = await plainAPI(fetch, "GET", "coins/prices", null, null);
 
     if (briefs) {
-        return { briefs };
+        return {
+            symbols: briefs.map(brief => brief.symbol),
+            briefs,
+        };
     } else {
         throw error(500, "Произошла неожиданная ошибка. Попробуйте ещё раз позже");
     }
