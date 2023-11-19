@@ -45,7 +45,7 @@ export async function plainAPI<Req, Res>(fetch: FetchFunction, method: string, p
 
     if (isAPIUnexpectedResponse(json)) {
         console.log("api got 'unexpected' response", json);
-        throw fail(500, { error: "APIUnexpectedResponse" });
+        throw error(500);
     } else {
         if (_.isArray(json) && json.length > 0) {
             logSensitive(`api got array with ${json.length} items, first item`, json[0]);
