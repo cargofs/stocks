@@ -48,7 +48,7 @@ export const actions = {
 
         const apiResponse: Data.APINormalResponse<null> = await api(fetch, "POST", "orders/create", {
             assetsSymbol: symbol,
-            usdMoney: pendingUSD
+            usdMoney: _.round(pendingUSD, 2)
         }, locals.token, { cookies });
 
         if (apiResponse.statusCode == APIStatusCode.SUCCESS) {
@@ -76,7 +76,7 @@ export const actions = {
 
         const apiResponse: Data.APINormalResponse<null> = await api(fetch, "POST", "orders/sail", {
             assetsSymbol: symbol,
-            assetsCount: pendingAssets
+            assetsCount: _.round(pendingAssets, 10)
         }, locals.token, { cookies });
 
         if (apiResponse.statusCode == APIStatusCode.SUCCESS) {
