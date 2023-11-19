@@ -45,6 +45,11 @@ async function authAction(path: string, successMessage: string, { request, cooki
         cookies.set(CookieName.SESSION, token, { path: "/", secure: !dev });
         console.log("cookie set");
         return { message: successMessage };
+    } else if (path == "login" && apiResponse.statusCode == APIStatusCode.WRONG_LOGIN_OR_PASSWORD) {
+        throw error(403, {
+            apiStatusCode: apiResponse.statusCode,
+            message: "Неверное имя пользователя или пароль"
+        });
     } else if (path == "registration" && apiResponse.statusCode == APIStatusCode.LOGIN_ALREADY_EXIST) {
         throw error(403, {
             apiStatusCode: apiResponse.statusCode,

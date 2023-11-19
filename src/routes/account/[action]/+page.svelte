@@ -15,6 +15,7 @@
     $: passwordOk = (password.match(pattern)?.length ?? 0) > 0;
 
     let knownTakenLogins: string[] = [];
+    let loginOrPasswordWasWrong = false;
 </script>
 
 <div class="content">
@@ -48,13 +49,17 @@
                 } else {
                     await goto("/");
                 }
-            } else if (result.type === "error") {
-                if (
-                    result.error?.apiStatusCode ==
-                    APIStatusCode.LOGIN_ALREADY_EXIST
-                ) {
-                    knownTakenLogins = [...knownTakenLogins, login];
-                }
+            } else if (
+                result.type === "error" &&
+                result.error?.apiStatusCode == APIStatusCode.LOGIN_ALREADY_EXIST
+            ) {
+                knownTakenLogins = [...knownTakenLogins, login];
+            } else if (
+                result.type === "error" &&
+                result.error?.apiStatusCode ==
+                    APIStatusCode.WRONG_LOGIN_OR_PASSWORD
+            ) {
+                loginOrPasswordWasWrong = true;
             } else {
                 update();
             }
@@ -71,6 +76,9 @@
                 name="login"
                 {pattern}
                 bind:value={login}
+                on:input={() => {
+                    loginOrPasswordWasWrong = false;
+                }}
             />
             <span class="icon is-small is-left">
                 <i class="fas fa-user" />
@@ -92,6 +100,9 @@
                 name="password"
                 {pattern}
                 bind:value={password}
+                on:input={() => {
+                    loginOrPasswordWasWrong = false;
+                }}
             />
             <span class="icon is-small is-left">
                 <i class="fas fa-lock" />
@@ -99,6 +110,8 @@
         </p>
         {#if password.length > 0 && !passwordOk}
             <p class="help is-danger">Только a-z, A-Z, 0-9</p>
+        {:else if loginOrPasswordWasWrong}
+            <p class="help is-danger">Неверное имя пользователя или пароль</p>
         {/if}
     </div>
 
