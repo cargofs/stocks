@@ -4,8 +4,8 @@ import { APIStatusCode, CookieName, logSensitive } from '$lib';
 import { dev } from '$app/environment';
 import { api } from '$lib/server/api';
 
-export const load = (async ({ locals, url }) => {
-    if (locals.token) {
+export const load = (async ({ cookies, url }) => {
+    if (cookies.get(CookieName.SESSION)) {
         console.log("already logged in! redirecting");
         throw redirect(303, url.searchParams.get("continue") ?? "/")
     }
