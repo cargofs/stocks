@@ -9,6 +9,7 @@ export const load: PageLoad = async ({ params, url }) => {
     return {
         action: params.action,
         continue: url.searchParams.get("continue"),
-        forcedLogout: url.searchParams.get("forcedLogout")
+        forcedLogout: url.searchParams.get("forcedLogout"),
+        explicit: url.searchParams.get("explicit"),
     }
 };

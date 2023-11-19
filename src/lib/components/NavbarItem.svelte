@@ -16,7 +16,6 @@
         if (target.logout) {
             await fetch("/?/logout", { method: "POST", body: "" });
             await invalidateAll();
-            await goto("/");
         }
     }
 </script>

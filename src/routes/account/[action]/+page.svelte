@@ -21,7 +21,7 @@
 <div class="content">
     <h1>{data.action == "login" ? "Вход" : "Регистрация"}</h1>
 
-    {#if data.continue}
+    {#if data.continue && !data.explicit}
         <article class="message is-warning">
             <div class="message-body">
                 {#if data.forcedLogout}
