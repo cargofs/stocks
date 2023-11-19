@@ -64,6 +64,21 @@ export function formatPercentage(value: string | number | undefined, signForPosi
     return format.format(numberValue / 100);
 }
 
+export function formatDecimal(value: string | number | undefined, signForPositive: boolean): string {
+    const numberValue = cleanNumber(value);
+
+    if (numberValue === undefined) {
+        return `???`
+    }
+
+    const format = Intl.NumberFormat("ru", {
+        signDisplay: signForPositive ? "exceptZero" : "auto",
+        style: "decimal"
+    });
+
+    return format.format(numberValue);
+}
+
 export function formatUSD(value: string | number | undefined, signForPositive: boolean): string {
     const numberValue = cleanNumber(value);
 

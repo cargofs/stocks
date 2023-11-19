@@ -122,11 +122,13 @@ declare global {
 
         interface UserScore {
             login: string
-            changeCost: {
-                spentUsd: number
-                costUsd: number
-                percent: number
-            }
+            changeCost: ChangeCost
+        }
+
+        interface ChangeCost {
+            spentUsd: number
+            costUsd: number
+            percent: number
         }
 
         interface UserScoreFlat {
@@ -134,6 +136,12 @@ declare global {
             spentUsd: number
             costUsd: number
             percent: number
+        }
+
+        interface AssetBalance {
+            assetsSymbol: string
+            assetsCount: number
+            changeCost: ChangeCost
         }
     }
 }
