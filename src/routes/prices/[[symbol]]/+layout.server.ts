@@ -3,7 +3,9 @@ import { plainAPI } from '$lib/server/api';
 import { error } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
-export const load = (async ({ fetch, params }) => {
+export const load = (async ({ fetch, params, depends }) => {
+    depends("app:prices");
+
     const symbol = params.symbol ?? DEFAULT_SYMBOL;
     const last24hStats: Data.SymbolStats = await plainAPI(fetch, "GET", `coins/statistics/${symbol}`, null, null);
 

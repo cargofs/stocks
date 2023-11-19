@@ -7,7 +7,9 @@ import { priceViews } from "$lib/priceViews";
 import { plainAPI } from '$lib/server/api';
 import { error } from '@sveltejs/kit';
 
-export const load = (async ({ fetch, params }) => {
+export const load = (async ({ fetch, params, depends }) => {
+    depends("app:prices");
+
     const symbol = params.symbol ?? DEFAULT_SYMBOL;
 
     const viewName = params.viewName ?? priceViews[0].name;

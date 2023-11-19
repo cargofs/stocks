@@ -6,7 +6,7 @@
     import _ from "lodash";
 
     import type { PageData } from "./$types";
-    import { goto } from "$app/navigation";
+    import { goto, invalidate } from "$app/navigation";
 
     import { formatPercentage, formatUSD } from "$lib";
     import { priceViews } from "$lib/priceViews";
@@ -75,6 +75,19 @@
                         : formatUSD(data.last24hStats.priceChange, true)}
                 </p>
             </div>
+        </div>
+
+        <div class="field">
+            <p class="control">
+                <button
+                    class="button is-danger is-light"
+                    on:click={() => {
+                        invalidate("app:prices");
+                    }}
+                >
+                    <i class="fa-solid fa-refresh" />
+                </button>
+            </p>
         </div>
     </div>
 </div>
