@@ -43,84 +43,89 @@
     let lackOfAssets = false;
 </script>
 
-<div class="columns">
-    <div class="column is-three-quarters">
+<div class="columns is-desktop">
+    <div class="column is-half-desktop is-three-quarters-widescreen">
         <div class="level">
             <div class="level-left">
                 <div class="level-item">
-                    <div class="control">
-                        <div class="select is-danger">
-                            <select
-                                value={data.symbol}
-                                on:input={async (ev) => {
-                                    const symbol = ev.currentTarget.value;
-                                    await goto(
-                                        `/prices/${symbol}/${data.view.name}`
-                                    );
-                                }}
-                            >
-                                {#each data.symbols as symbol}
-                                    <option value={symbol}>{symbol}</option>
-                                {/each}
-                            </select>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <div class="select is-danger">
+                                <select
+                                    value={data.symbol}
+                                    on:input={async (ev) => {
+                                        const symbol = ev.currentTarget.value;
+                                        await goto(
+                                            `/prices/${symbol}/${data.view.name}`
+                                        );
+                                    }}
+                                >
+                                    {#each data.symbols as symbol}
+                                        <option value={symbol}>{symbol}</option>
+                                    {/each}
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="level-item">
-                    <div class="control">
-                        <div class="select is-danger">
-                            <select
-                                value={data.view.name}
-                                on:input={async (ev) => {
-                                    const viewName = ev.currentTarget.value;
-                                    await goto(
-                                        `/prices/${data.symbol}/${viewName}`
-                                    );
+                        <div class="control">
+                            <div class="select is-danger">
+                                <select
+                                    value={data.view.name}
+                                    on:input={async (ev) => {
+                                        const viewName = ev.currentTarget.value;
+                                        await goto(
+                                            `/prices/${data.symbol}/${viewName}`
+                                        );
+                                    }}
+                                >
+                                    {#each priceViews.map((view) => view.name) as viewName}
+                                        <option value={viewName}
+                                            >{viewName}</option
+                                        >
+                                    {/each}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control">
+                            <button
+                                class="button is-danger is-light"
+                                on:click={async () => {
+                                    await invalidate("app:prices");
                                 }}
                             >
-                                {#each priceViews.map((view) => view.name) as viewName}
-                                    <option value={viewName}>{viewName}</option>
-                                {/each}
-                            </select>
+                                <i class="fa-solid fa-refresh" />
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="level-right">
-                <div
-                    class="level-item has-text-right is-clickable"
-                    on:click={toggleShowPercent}
-                    on:keypress={toggleShowPercent}
-                >
-                    <div>
-                        <p class="heading">За последние 24ч</p>
-                        <p class="title">
-                            {showPercent
-                                ? formatPercentage(
-                                      data.last24hStats.priceChangePercent,
-                                      true
-                                  )
-                                : formatUSD(
-                                      data.last24hStats.priceChange,
-                                      true
-                                  )}
-                        </p>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <p class="control">
-                        <button
-                            class="button is-danger is-light"
-                            on:click={async () => {
-                                await invalidate("app:prices");
-                            }}
+                <div class="field is-grouped is-grouped-right">
+                    <div class="control">
+                        <div
+                            class="level-item has-text-right is-clickable"
+                            on:click={toggleShowPercent}
+                            on:keypress={toggleShowPercent}
                         >
-                            <i class="fa-solid fa-refresh" />
-                        </button>
-                    </p>
+                            <div>
+                                <p class="heading">За последние 24ч</p>
+                                <p class="title">
+                                    {showPercent
+                                        ? formatPercentage(
+                                              data.last24hStats
+                                                  .priceChangePercent,
+                                              true
+                                          )
+                                        : formatUSD(
+                                              data.last24hStats.priceChange,
+                                              true
+                                          )}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -242,7 +247,7 @@
                 </div>
 
                 <div class="field">
-                    <p class="control">
+                    <div class="control">
                         <button
                             class="button is-danger is-fullwidth"
                             type="submit"
@@ -254,7 +259,7 @@
                                 false
                             )}
                         </button>
-                    </p>
+                    </div>
                 </div>
 
                 <div class="block has-text-centered mt-5">
@@ -298,7 +303,7 @@
                 </div>
 
                 <div class="field">
-                    <p class="control">
+                    <div class="control">
                         <button
                             class="button is-danger is-fullwidth"
                             type="submit"
@@ -310,7 +315,7 @@
                             Продать {formatDecimal(pendingAssets, false)}
                             {data.symbol}
                         </button>
-                    </p>
+                    </div>
                 </div>
 
                 <div class="content">
@@ -318,7 +323,7 @@
                 </div>
 
                 <div class="field">
-                    <p class="control">
+                    <div class="control">
                         <button
                             class="button is-danger is-fullwidth"
                             type="submit"
@@ -332,7 +337,7 @@
                             )}
                             {data.symbol}
                         </button>
-                    </p>
+                    </div>
                 </div>
             </form>
         </div>
