@@ -41,6 +41,13 @@
     let pendingAssets = 0;
 
     let lackOfAssets = false;
+
+    function reset() {
+        pendingUSD = 0;
+        pendingAssets = 0;
+
+        lackOfAssets = false;
+    }
 </script>
 
 <div class="columns is-desktop">
@@ -58,6 +65,7 @@
                                         await goto(
                                             `/prices/${symbol}/${data.view.name}`
                                         );
+                                        reset();
                                     }}
                                 >
                                     {#each data.symbols as symbol}
@@ -76,6 +84,7 @@
                                         await goto(
                                             `/prices/${data.symbol}/${viewName}`
                                         );
+                                        reset();
                                     }}
                                 >
                                     {#each priceViews.map((view) => view.name) as viewName}
@@ -92,6 +101,7 @@
                                 class="button is-danger is-light"
                                 on:click={async () => {
                                     await invalidate("app:prices");
+                                    reset();
                                 }}
                             >
                                 <i class="fa-solid fa-refresh" />
@@ -200,6 +210,7 @@
 
                         if (result.type === "success") {
                             await invalidate("app:prices");
+                            reset();
                         } else if (
                             result.type === "error" &&
                             result.error?.apiStatusCode ==
@@ -207,6 +218,7 @@
                         ) {
                             lackOfAssets = true;
                             await invalidate("app:prices");
+                            reset();
                         } else {
                             update();
                         }
