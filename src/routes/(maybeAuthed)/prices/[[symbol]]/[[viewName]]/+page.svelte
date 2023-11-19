@@ -23,6 +23,11 @@
     $: currentPrice =
         data.briefs.find((brief) => brief.symbol == data.symbol)?.price ?? 0;
 
+    $: showTradingUI =
+        $page.data.login &&
+        data.usdBalance !== undefined &&
+        data.assetBalance !== undefined;
+
     let showPercent = true;
     function toggleShowPercent() {
         showPercent = !showPercent;
@@ -35,7 +40,7 @@
 </script>
 
 <div class="columns">
-    <div class="column" class:is-three-quarters={$page.data.login}>
+    <div class="column is-three-quarters">
         <div class="level">
             <div class="level-left">
                 <div class="level-item">
@@ -176,7 +181,7 @@
         />
     </div>
 
-    {#if $page.data.login}
+    {#if showTradingUI}
         <div class="column">
             <form
                 method="POST"
@@ -306,6 +311,24 @@
                     </p>
                 </div>
             </form>
+        </div>
+    {:else}
+        <div class="content">
+            <article class="message">
+                <div class="message-body">
+                    <a
+                        href={`/account/login?continue=${encodeURIComponent(
+                            $page.url.pathname
+                        )}&explicit=1`}>Войдите</a
+                    >
+                    в учётную запись или
+                    <a
+                        href={`/account/create?continue=${encodeURIComponent(
+                            $page.url.pathname
+                        )}&explicit=1`}>создайте новую</a
+                    >, чтобы играть.
+                </div>
+            </article>
         </div>
     {/if}
 </div>
