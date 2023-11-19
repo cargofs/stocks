@@ -28,6 +28,7 @@ declare global {
 
     interface Target {
         path?: string;
+        iconClasses?: string;
         name: string;
         inner?: Target[];
         condition?: boolean;
@@ -37,6 +38,7 @@ declare global {
 
     interface TargetMod {
         path?: string;
+        iconClasses?: string;
         nameParts: string[];
         inner?: TargetMod[];
         preload?: boolean;

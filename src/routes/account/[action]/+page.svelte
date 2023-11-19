@@ -81,7 +81,7 @@
                 }}
             />
             <span class="icon is-small is-left">
-                <i class="fas fa-user" />
+                <i class="fa-solid fa-user" />
             </span>
         </p>
         {#if login.length > 0 && !loginOk}
@@ -105,7 +105,7 @@
                 }}
             />
             <span class="icon is-small is-left">
-                <i class="fas fa-lock" />
+                <i class="fa-solid fa-lock" />
             </span>
         </p>
         {#if password.length > 0 && !passwordOk}
@@ -127,7 +127,7 @@
                     bind:value={passwordAgain}
                 />
                 <span class="icon is-small is-left">
-                    <i class="fas fa-lock" />
+                    <i class="fa-solid fa-lock" />
                 </span>
             </p>
             {#if passwordAgain.length > 0 && password != passwordAgain}

@@ -9,16 +9,17 @@
         { path: "/prices", name: "Курсы валют" },
         { path: "/leaderboard", name: "Таблица лидеров" },
         {
+            iconClasses: "fa-solid fa-user",
             name: login == undefined ? "Учётная запись" : login,
             inner: [
                 {
                     path: "/account/create",
-                    name: "Зарегистрироваться",
+                    name: "Регистрация",
                     condition: login == undefined,
                 },
                 {
                     path: "/account/login",
-                    name: "Войти",
+                    name: "Вход",
                     condition: login == undefined,
                 },
                 {
@@ -43,7 +44,14 @@
 
             let mod: TargetMod = {
                 nameParts: prefix.concat(target.name),
-                ..._.pick(target, "path", "preload", "logout", "disabled"),
+                ..._.pick(
+                    target,
+                    "path",
+                    "preload",
+                    "logout",
+                    "disabled",
+                    "iconClasses"
+                ),
             };
 
             if (target.inner) {

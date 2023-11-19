@@ -4,6 +4,7 @@
     import type { Writable } from "svelte/store";
     import _ from "lodash";
     import { goto, invalidateAll } from "$app/navigation";
+    import NavbarTargetVisual from "./NavbarTargetVisual.svelte";
 
     export let target: TargetMod;
 
@@ -33,7 +34,7 @@
     on:click={target.inner ? null : click}
 >
     {#if target.inner}
-        <a class="navbar-link">{_.last(target.nameParts)}</a>
+        <a class="navbar-link"><NavbarTargetVisual {target} /></a>
 
         <div class="navbar-dropdown is-right">
             {#each target.inner as innerTarget}
@@ -41,6 +42,6 @@
             {/each}
         </div>
     {:else}
-        {_.last(target.nameParts)}
+        <NavbarTargetVisual {target} />
     {/if}
 </svelte:element>
