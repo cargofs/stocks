@@ -1,6 +1,7 @@
 import { api, plainAPI } from '$lib/server/api';
 import type { LayoutServerLoad } from './$types';
 import { genericServerError } from '$lib';
+import _ from 'lodash';
 
 export const load = (async ({ fetch, depends, locals, cookies }) => {
     depends("app:prices");
@@ -12,7 +13,7 @@ export const load = (async ({ fetch, depends, locals, cookies }) => {
     if (locals.token) {
         const usdBalanceResponse: Data.APINormalResponse<number> = await api(fetch, "GET", "balance", null, locals.token, { cookies });
 
-        if (usdBalanceResponse.data) {
+        if (!_.isNil(usdBalanceResponse.data)) {
             usdBalance = usdBalanceResponse.data;
         } else {
             throw genericServerError(usdBalanceResponse.statusCode);
