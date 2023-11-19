@@ -21,7 +21,7 @@
 <Navbar />
 
 <div class="mx-5 mb-5">
-    <div class="container my-5">
+    <div class="container my-5 pb-5">
         <slot />
     </div>
 </div>
