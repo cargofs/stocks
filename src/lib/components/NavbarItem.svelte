@@ -27,7 +27,7 @@
     class:is-hoverable={target.inner}
     class:is-active={(target.path &&
         target.path != "/" &&
-        $page.url.pathname.startsWith(target.path)) ||
+        ($page.url.pathname + $page.url.search).startsWith(target.path)) ||
         target.path == $page.url.pathname}
     href={target.logout ? null : target.path}
     on:click={target.inner ? null : click}

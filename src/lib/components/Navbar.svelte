@@ -13,16 +13,26 @@
             name: login == undefined ? "Учётная запись" : login,
             inner: [
                 {
-                    path: `/account/create?continue=${encodeURIComponent(
-                        $page.url.pathname
-                    )}&explicit=1`,
+                    path: $page.url.pathname.startsWith("/account")
+                        ? ($page.url.pathname + $page.url.search).replace(
+                              "/login",
+                              "/create"
+                          )
+                        : `/account/create?continue=${encodeURIComponent(
+                              $page.url.pathname
+                          )}&explicit=1`,
                     name: "Регистрация",
                     condition: login == undefined,
                 },
                 {
-                    path: `/account/login?continue=${encodeURIComponent(
-                        $page.url.pathname
-                    )}&explicit=1`,
+                    path: $page.url.pathname.startsWith("/account")
+                        ? ($page.url.pathname + $page.url.search).replace(
+                              "/create",
+                              "/login"
+                          )
+                        : `/account/login?continue=${encodeURIComponent(
+                              $page.url.pathname
+                          )}&explicit=1`,
                     name: "Вход",
                     condition: login == undefined,
                 },
