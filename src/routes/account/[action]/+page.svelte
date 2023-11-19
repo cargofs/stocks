@@ -67,7 +67,7 @@
     }}
 >
     <div class="field">
-        <p class="control has-icons-left has-icons-right">
+        <p class="control has-icons-left">
             <input
                 class="input is-danger"
                 type="text"
