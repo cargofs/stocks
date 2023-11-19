@@ -33,14 +33,14 @@
                 bp = bp.toLowerCase();
             }
 
-            if (!ap) {
+            if (_.isNil(ap)) {
                 return sortDirection;
             }
-            if (!bp) {
+            if (_.isNil(bp)) {
                 return -sortDirection;
             }
 
-            return sortDirection * ((ap == bp ? 0 : ap < bp) ? -1 : 1);
+            return sortDirection * (ap === bp ? 0 : ap < bp ? -1 : 1);
         });
 
     let headers: [keyof Data.UserScoreFlat, string][] = [
@@ -96,7 +96,7 @@
     </div>
 {:else}
     <div class="content">
-        <p>По указанному вами запросу не найдено ни одного пользователя</p>
+        <p>Не найдено ни одного пользователя</p>
     </div>
 {/if}
 
