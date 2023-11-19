@@ -77,7 +77,8 @@ export function formatDecimal(value: string | number | undefined, signForPositiv
 
     const format = Intl.NumberFormat("ru", {
         signDisplay: signForPositive ? "exceptZero" : "auto",
-        style: "decimal"
+        style: "decimal",
+        maximumFractionDigits: 10,
     });
 
     return format.format(numberValue);
@@ -93,7 +94,8 @@ export function formatUSD(value: string | number | undefined, signForPositive: b
     const format = Intl.NumberFormat("ru", {
         signDisplay: signForPositive ? "exceptZero" : "auto",
         style: "currency",
-        currency: "USD"
+        currency: "USD",
+        maximumFractionDigits: 2,
     });
 
     return format.format(numberValue);

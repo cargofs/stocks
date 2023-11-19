@@ -14,7 +14,7 @@ export const load = (async ({ fetch, depends, locals, cookies }) => {
         const usdBalanceResponse: Data.APINormalResponse<number> = await api(fetch, "GET", "balance", null, locals.token, { cookies });
 
         if (!_.isNil(usdBalanceResponse.data)) {
-            usdBalance = usdBalanceResponse.data;
+            usdBalance = _.toNumber(usdBalanceResponse.data);
         } else {
             throw genericServerError(usdBalanceResponse.statusCode);
         }

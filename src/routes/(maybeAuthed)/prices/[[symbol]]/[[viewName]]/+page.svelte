@@ -17,7 +17,6 @@
     import { priceViews } from "$lib/priceViews";
     import { page } from "$app/stores";
     import { enhance } from "$app/forms";
-    import { error } from "@sveltejs/kit";
 
     export let data: PageData;
 
@@ -225,12 +224,15 @@
                             type="number"
                             min="0"
                             step="0.01"
-                            placeholder="Сумма"
+                            placeholder="Сумма в долларах"
                             name="pendingUSD"
                             bind:value={pendingUSD}
                             on:input={(event) => {
-                                pendingAssets =
-                                    event.currentTarget.value / currentPrice;
+                                pendingAssets = _.round(
+                                    _.toNumber(event.currentTarget.value) /
+                                        currentPrice,
+                                    10
+                                );
                             }}
                         />
                         <span class="icon is-small is-left">
@@ -239,9 +241,25 @@
                     </p>
                 </div>
 
+                <div class="field">
+                    <p class="control">
+                        <button
+                            class="button is-danger is-fullwidth"
+                            type="submit"
+                            formaction="?/buyAssets"
+                            disabled={pendingUSD < 0.01}
+                        >
+                            Купить {data.symbol} за {formatUSD(
+                                pendingUSD,
+                                false
+                            )}
+                        </button>
+                    </p>
+                </div>
+
                 <div class="block has-text-centered mt-5">
                     <div>
-                        <p class="heading">{data.symbol}</p>
+                        <p class="heading">Активов {data.symbol}</p>
                         <p class="title">
                             {formatDecimal(data.assetBalance, false)}
                         </p>
@@ -255,14 +273,17 @@
                             type="number"
                             min="0"
                             step="any"
-                            placeholder="Сумма"
+                            placeholder="Сумма активов"
                             name="pendingAssets"
                             bind:value={pendingAssets}
                             on:input={(event) => {
                                 lackOfAssets = false;
 
-                                pendingUSD =
-                                    event.currentTarget.value * currentPrice;
+                                pendingUSD = _.round(
+                                    _.toNumber(event.currentTarget.value) *
+                                        currentPrice,
+                                    2
+                                );
                             }}
                         />
                         <span class="icon is-small is-left">
@@ -271,47 +292,45 @@
                     </p>
                     {#if lackOfAssets}
                         <p class="help is-danger">
-                            Недостаточно акций для продажи
+                            Недостаточно активов для продажи
                         </p>
                     {/if}
                 </div>
 
-                <div class="field is-grouped is-grouped-centered">
+                <div class="field">
                     <p class="control">
                         <button
-                            class="button is-danger"
-                            type="submit"
-                            formaction="?/buyAssets"
-                            disabled={pendingUSD < 0.01}
-                        >
-                            Купить {data.symbol}
-                        </button>
-                    </p>
-
-                    <p class="control">
-                        <button
-                            class="button is-danger"
+                            class="button is-danger is-fullwidth"
                             type="submit"
                             formaction="?/sellAssets"
                             disabled={!data.assetBalance ||
                                 pendingAssets <= 0 ||
                                 pendingAssets > data.assetBalance}
                         >
-                            Продать {data.symbol}
+                            Продать {formatDecimal(pendingAssets, false)}
+                            {data.symbol}
                         </button>
                     </p>
                 </div>
 
-                <div class="field is-grouped is-grouped-centered">
+                <div class="content">
+                    <hr />
+                </div>
+
+                <div class="field">
                     <p class="control">
                         <button
-                            class="button is-danger"
+                            class="button is-danger is-fullwidth"
                             type="submit"
                             formaction="?/sellAllAssets"
                             disabled={!data.assetBalance ||
                                 data.assetBalance <= 0}
                         >
-                            Продать все {data.symbol}
+                            Продать все {formatDecimal(
+                                data.assetBalance,
+                                false
+                            )}
+                            {data.symbol}
                         </button>
                     </p>
                 </div>

@@ -1,5 +1,6 @@
 import { DEFAULT_SYMBOL, genericServerError } from '$lib';
 import { api, plainAPI } from '$lib/server/api';
+import _ from 'lodash';
 import type { LayoutServerLoad } from './$types';
 
 export const load = (async ({ fetch, params, depends, locals, cookies }) => {
@@ -14,7 +15,7 @@ export const load = (async ({ fetch, params, depends, locals, cookies }) => {
         const assetBalanceResponse: Data.APINormalResponse<Data.AssetBalance> = await api(fetch, "GET", "balance/assets/" + symbol, null, locals.token, { cookies });
 
         if (assetBalanceResponse.data) {
-            assetBalance = assetBalanceResponse.data.assetsCount;
+            assetBalance = _.toNumber(assetBalanceResponse.data.assetsCount);
         } else {
             throw genericServerError(assetBalanceResponse.statusCode);
         }
