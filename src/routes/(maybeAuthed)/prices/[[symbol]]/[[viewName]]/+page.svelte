@@ -283,7 +283,8 @@
                             class="button is-danger"
                             type="submit"
                             formaction="?/sellAssets"
-                            disabled={pendingAssets <= 0 ||
+                            disabled={!data.assetBalance ||
+                                pendingAssets <= 0 ||
                                 pendingAssets > data.assetBalance}
                         >
                             Продать {data.symbol}
@@ -297,7 +298,8 @@
                             class="button is-danger"
                             type="submit"
                             formaction="?/sellAllAssets"
-                            disabled={data.assetBalance <= 0}
+                            disabled={!data.assetBalance ||
+                                data.assetBalance <= 0}
                         >
                             Продать все {data.symbol}
                         </button>
