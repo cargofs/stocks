@@ -256,7 +256,7 @@
                             }}
                         />
                         <span class="icon is-small is-left">
-                            <i class="fa-solid fa-bitcoin-sign" />
+                            <i class="fa-solid fa-coins" />
                         </span>
                     </p>
                     {#if lackOfAssets}
