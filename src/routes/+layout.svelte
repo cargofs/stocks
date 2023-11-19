@@ -1,7 +1,9 @@
 <script lang="ts">
     import { onMount, setContext } from "svelte";
-    import Navbar from "$lib/components/Navbar.svelte";
     import { writable, type Writable } from "svelte/store";
+
+    import Navbar from "$lib/components/Navbar.svelte";
+    import Footer from "$lib/components/Footer.svelte";
 
     const pageTitleParts: Writable<string[]> = writable();
     setContext("pageTitleParts", pageTitleParts);
@@ -23,6 +25,8 @@
         <slot />
     </div>
 </div>
+
+<Footer />
 
 <style global>
     @import "node_modules/bulma/css/bulma.min.css";

@@ -6,7 +6,7 @@
     $: login = $page.data.login;
 
     $: targets = [
-        { path: "/prices", name: "Курсы валют" },
+        { path: "/prices", name: "Биржа" },
         { path: "/leaderboard", name: "Таблица лидеров" },
         {
             iconClasses: "fa-solid fa-user",
