@@ -13,7 +13,12 @@ export async function api<Req, Res>(fetch: FetchFunction, method: string, path: 
         handleInvalidToken.cookies.delete(CookieName.SESSION);
         console.log("cookie deleted");
 
-        throw error(403, { message: "Ваш сеанс работы истёк", apiStatusCode: normalResponse.statusCode });
+        let message = "Ваш сеанс работы истёк";
+        if (normalResponse.statusCode == APIStatusCode.WRONG_TOKEN) {
+            message = "Выполнен вход с другого устройства";
+        }
+
+        throw error(403, { message, apiStatusCode: normalResponse.statusCode });
     }
 
     return normalResponse;
