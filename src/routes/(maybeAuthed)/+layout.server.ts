@@ -3,7 +3,9 @@ import type { LayoutServerLoad } from './$types';
 import { api } from '$lib/server/api';
 import { genericServerError } from '$lib';
 
-export const load: LayoutServerLoad = (async ({ locals, fetch, cookies }) => {
+export const load: LayoutServerLoad = (async ({ locals, fetch, cookies, depends }) => {
+    depends("app:token");
+
     if (!locals.token) {
         console.log("no locals.token");
         return {};

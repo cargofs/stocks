@@ -4,6 +4,7 @@ import { genericServerError } from '$lib';
 
 export const load = (async ({ fetch, depends, locals, cookies }) => {
     depends("app:prices");
+    depends("app:token");
 
     const briefs: Data.SymbolBrief[] = await plainAPI(fetch, "GET", "coins/prices", null, null);
 

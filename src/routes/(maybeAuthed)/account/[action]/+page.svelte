@@ -1,6 +1,6 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
-    import { goto, invalidateAll } from "$app/navigation";
+    import { goto, invalidate } from "$app/navigation";
     import { APIStatusCode } from "$lib";
     import type { PageData } from "./$types";
 
@@ -40,7 +40,7 @@
     use:enhance={() => {
         return async ({ result, update }) => {
             console.log(result);
-            await invalidateAll();
+            await invalidate("app:token");
 
             if (result.type === "success") {
                 if (data.continue) {

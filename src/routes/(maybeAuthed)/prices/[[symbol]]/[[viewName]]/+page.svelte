@@ -17,16 +17,21 @@
     import { priceViews } from "$lib/priceViews";
     import { page } from "$app/stores";
     import { enhance } from "$app/forms";
+    import { error } from "@sveltejs/kit";
 
     export let data: PageData;
 
     $: currentPrice =
         data.briefs.find((brief) => brief.symbol == data.symbol)?.price ?? 0;
 
-    $: showTradingUI =
-        $page.data.login &&
-        data.usdBalance !== undefined &&
-        data.assetBalance !== undefined;
+    $: haveBalances =
+        data.usdBalance !== undefined && data.assetBalance !== undefined;
+    $: showTradingUI = $page.data.login && haveBalances;
+    $: {
+        if ($page.data.login && !haveBalances) {
+            invalidate("app:token");
+        }
+    }
 
     let showPercent = true;
     function toggleShowPercent() {

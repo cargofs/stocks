@@ -4,6 +4,7 @@ import type { LayoutServerLoad } from './$types';
 
 export const load = (async ({ fetch, params, depends, locals, cookies }) => {
     depends("app:prices");
+    depends("app:token");
 
     const symbol = params.symbol ?? DEFAULT_SYMBOL;
     const last24hStats: Data.SymbolStats = await plainAPI(fetch, "GET", `coins/statistics/${symbol}`, null, null);
