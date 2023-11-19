@@ -1,6 +1,6 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad, RequestEvent } from './$types';
-import { APIStatusCode, CookieName, logSensitive } from '$lib';
+import { APIStatusCode, CookieName, genericServerError, logSensitive } from '$lib';
 import { dev } from '$app/environment';
 import { api } from '$lib/server/api';
 
@@ -30,7 +30,7 @@ async function authAction(path: string, successMessage: string, { request, cooki
     logSensitive("...with", { password });
 
     if (!login || !password) {
-        return fail(400, { error: "Не указано имя пользователя или пароль" });
+        throw error(400, "Не указано имя пользователя или пароль");
     }
 
     const apiResponse = await api<Data.AuthRequest, Data.AuthResponse>(fetch, "POST", "auth/" + path, {
@@ -56,6 +56,6 @@ async function authAction(path: string, successMessage: string, { request, cooki
             message: "Пользователь с данным именем уже существует"
         });
     } else {
-        return fail(500, { error: "Произошла неожиданная ошибка. Попробуйте ещё раз позже" });
+        throw genericServerError(apiResponse.statusCode);
     }
 }

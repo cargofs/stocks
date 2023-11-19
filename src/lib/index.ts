@@ -30,6 +30,10 @@ export function notFound() {
     return error(404, "Not Found");
 }
 
+export function genericServerError(apiStatusCode: APIStatusCode | undefined) {
+    return error(500, { message: "Произошла неожиданная ошибка. Попробуйте ещё раз позже", apiStatusCode });
+}
+
 export function logSensitive(...data: unknown[]) {
     if (dev) {
         console.debug("[dev]", ...data);

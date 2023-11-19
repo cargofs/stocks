@@ -1,6 +1,6 @@
 import { api, plainAPI } from '$lib/server/api';
-import { fail } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
+import { genericServerError } from '$lib';
 
 export const load = (async ({ fetch, depends, locals, cookies }) => {
     depends("app:prices");
@@ -14,7 +14,7 @@ export const load = (async ({ fetch, depends, locals, cookies }) => {
         if (usdBalanceResponse.data) {
             usdBalance = usdBalanceResponse.data;
         } else {
-            return fail(500);
+            throw genericServerError(usdBalanceResponse.statusCode);
         }
     }
 
@@ -25,6 +25,6 @@ export const load = (async ({ fetch, depends, locals, cookies }) => {
             usdBalance,
         };
     } else {
-        return fail(500);
+        throw genericServerError(undefined);
     }
 }) satisfies LayoutServerLoad;

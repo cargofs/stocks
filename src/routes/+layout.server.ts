@@ -1,7 +1,7 @@
 import type { LayoutServerLoad } from './$types';
 
-import { fail } from '@sveltejs/kit';
 import { api } from '$lib/server/api';
+import { genericServerError } from '$lib';
 
 export const load: LayoutServerLoad = (async ({ locals, fetch, cookies }) => {
     if (!locals.token) {
@@ -20,6 +20,6 @@ export const load: LayoutServerLoad = (async ({ locals, fetch, cookies }) => {
             money
         };
     } else {
-        return fail(500, { message: whoami.message });
+        throw genericServerError(whoami.statusCode);
     }
 });

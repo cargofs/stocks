@@ -1,6 +1,6 @@
 import { api } from '$lib/server/api';
-import { fail } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { genericServerError } from '$lib';
 
 export const load = (async ({ fetch }) => {
     const response: Data.APINormalResponse<Data.LeaderboardResponse> = await api(fetch, "GET", "statistics/leaderboard", null, null, null);
@@ -12,6 +12,6 @@ export const load = (async ({ fetch }) => {
             })
         }
     } else {
-        return fail(500);
+        throw genericServerError(response.statusCode);
     }
 }) satisfies PageServerLoad;

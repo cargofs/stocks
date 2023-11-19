@@ -1,6 +1,5 @@
-import { DEFAULT_SYMBOL } from '$lib';
+import { DEFAULT_SYMBOL, genericServerError } from '$lib';
 import { api, plainAPI } from '$lib/server/api';
-import { fail } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
 export const load = (async ({ fetch, params, depends, locals, cookies }) => {
@@ -16,13 +15,13 @@ export const load = (async ({ fetch, params, depends, locals, cookies }) => {
         if (assetBalanceResponse.data) {
             assetBalance = assetBalanceResponse.data.assetsCount;
         } else {
-            return fail(500);
+            throw genericServerError(assetBalanceResponse.statusCode);
         }
     }
 
     if (last24hStats) {
         return { last24hStats, assetBalance };
     } else {
-        return fail(500);
+        throw genericServerError(undefined);
     }
 }) satisfies LayoutServerLoad;

@@ -1,11 +1,11 @@
-import { APIStatusCode, CookieName } from '$lib';
+import { APIStatusCode, CookieName, genericServerError } from '$lib';
 import { api } from '$lib/server/api';
-import { fail, type Actions } from '@sveltejs/kit';
+import { error, type Actions } from '@sveltejs/kit';
 
 export const actions = {
     logout: async ({ cookies, fetch, locals }) => {
         if (!locals.token) {
-            return fail(400, { error: "Невозможно выйти, если не выполнен вход" });
+            throw error(400, "Невозможно выйти, если не выполнен вход");
         }
 
         const response: Data.APINormalResponse<null> = await api(fetch, "POST", "auth/logout", null, locals.token, null);
@@ -16,7 +16,7 @@ export const actions = {
 
             return { message: "Успешный выход из учётной записи" };
         } else {
-            return fail(500, { error: "Не удалось выйти" });
+            throw genericServerError(response.statusCode);
         }
     },
 } satisfies Actions;

@@ -1,5 +1,5 @@
-import { APIStatusCode, CookieName, logSensitive } from '$lib';
-import { fail, type Cookies, error } from '@sveltejs/kit';
+import { APIStatusCode, CookieName, genericServerError, logSensitive } from '$lib';
+import { type Cookies, error } from '@sveltejs/kit';
 import _ from 'lodash';
 
 type FetchFunction = (input: URL | RequestInfo, init?: RequestInit | undefined) => Promise<Response>;
@@ -45,7 +45,7 @@ export async function plainAPI<Req, Res>(fetch: FetchFunction, method: string, p
 
     if (isAPIUnexpectedResponse(json)) {
         console.log("api got 'unexpected' response", json);
-        throw error(500);
+        throw genericServerError(undefined);
     } else {
         if (_.isArray(json) && json.length > 0) {
             logSensitive(`api got array with ${json.length} items, first item`, json[0]);

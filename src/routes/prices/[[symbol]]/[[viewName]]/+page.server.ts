@@ -2,10 +2,10 @@ import _ from 'lodash';
 
 import type { PageServerLoad } from './$types';
 
-import { APIStatusCode, DEFAULT_SYMBOL } from '$lib';
+import { APIStatusCode, DEFAULT_SYMBOL, genericServerError } from '$lib';
 import { priceViews } from "$lib/priceViews";
 import { api, plainAPI } from '$lib/server/api';
-import { error, type Actions, fail } from '@sveltejs/kit';
+import { error, type Actions } from '@sveltejs/kit';
 
 export const load = (async ({ fetch, params, depends }) => {
     depends("app:prices");
@@ -24,7 +24,7 @@ export const load = (async ({ fetch, params, depends }) => {
             prices: view.points == Infinity ? pricePoints : _.slice(pricePoints, pricePoints.length - view.points)
         };
     } else {
-        throw error(500, "Произошла неожиданная ошибка. Попробуйте ещё раз позже");
+        throw genericServerError(undefined);
     }
 }) satisfies PageServerLoad;
 
@@ -54,7 +54,7 @@ export const actions = {
         if (apiResponse.statusCode == APIStatusCode.SUCCESS) {
             return {};
         } else {
-            return fail(500);
+            throw genericServerError(apiResponse.statusCode);
         }
     },
     sellAssets: async ({ fetch, cookies, request, locals }) => {
@@ -87,7 +87,7 @@ export const actions = {
                 message: "Недостаточно акций"
             });
         } else {
-            return fail(500);
+            throw genericServerError(apiResponse.statusCode);
         }
     },
     sellAllAssets: async ({ fetch, cookies, request, locals }) => {
@@ -109,7 +109,7 @@ export const actions = {
         if (apiResponse.statusCode == APIStatusCode.SUCCESS) {
             return {};
         } else {
-            return fail(500);
+            throw genericServerError(apiResponse.statusCode);
         }
     },
 } satisfies Actions;

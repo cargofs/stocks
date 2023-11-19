@@ -1,6 +1,6 @@
 import { dev } from '$app/environment';
 import { env as dynamicPrivateEnv } from '$env/dynamic/private';
-import { error } from '@sveltejs/kit';
+import { genericServerError } from '$lib';
 
 export function env<
     K extends keyof App.Env & keyof typeof dynamicPrivateEnv
@@ -21,7 +21,7 @@ export function env<
 
     if (value === undefined) {
         console.log("environment variable not available", { dev, key });
-        throw error(500);
+        throw genericServerError(undefined);
     }
 
     return value;
