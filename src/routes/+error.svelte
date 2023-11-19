@@ -24,7 +24,9 @@
         class="button is-danger"
         data-sveltekit-reload
         href={isTokenError
-            ? `/account/login?continue=${$page.url.pathname}&forcedLogout=1`
+            ? `/account/login?continue=${encodeURIComponent(
+                  $page.url.pathname
+              )}&forcedLogout=1`
             : $page.url.pathname}
     >
         {#if isTokenError}

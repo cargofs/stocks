@@ -1,4 +1,4 @@
-import { error, fail, redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad, RequestEvent } from './$types';
 import { APIStatusCode, CookieName, genericServerError, logSensitive } from '$lib';
 import { dev } from '$app/environment';

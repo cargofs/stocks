@@ -140,14 +140,18 @@
             Нет учётной записи? <a
                 class="has-text-danger"
                 href={data.continue
-                    ? `/account/create?continue=${data.continue}`
+                    ? `/account/create?continue=${encodeURIComponent(
+                          data.continue
+                      )}`
                     : `/account/create`}>Зарегистрироваться</a
             >
         {:else}
             Уже есть учётная запись? <a
                 class="has-text-danger"
                 href={data.continue
-                    ? `/account/login?continue=${data.continue}`
+                    ? `/account/login?continue=${encodeURIComponent(
+                          data.continue
+                      )}`
                     : `/account/login`}>Войти</a
             >
         {/if}
