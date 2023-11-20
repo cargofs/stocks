@@ -29,3 +29,5 @@ export const priceViews: {
 
         { name: "Все", interval: "1M", points: Infinity, timeUnit: "year" },
     ];
+
+export const DEFAULT_VIEW_NAME = priceViews[3].name;

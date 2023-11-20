@@ -3,7 +3,7 @@ import _ from 'lodash';
 import type { PageServerLoad } from './$types';
 
 import { APIStatusCode, DEFAULT_SYMBOL, genericServerError } from '$lib';
-import { priceViews } from "$lib/priceViews";
+import { DEFAULT_VIEW_NAME, priceViews } from "$lib/priceViews";
 import { api, plainAPI } from '$lib/server/api';
 import { error, type Actions } from '@sveltejs/kit';
 
@@ -12,7 +12,7 @@ export const load = (async ({ fetch, params, depends }) => {
 
     const symbol = params.symbol ?? DEFAULT_SYMBOL;
 
-    const viewName = params.viewName ?? priceViews[0].name;
+    const viewName = params.viewName ?? DEFAULT_VIEW_NAME;
     const view = priceViews.find(view => view.name == viewName)!;
 
     const pricePoints: Data.PricePoint[] = await plainAPI(fetch, "GET", `coins/prices/${symbol}?interval=${view.interval}`, null, null);
