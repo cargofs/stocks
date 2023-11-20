@@ -3,7 +3,12 @@
     import _ from "lodash";
 
     import type { PageData } from "./$types";
-    import { formatDecimal, formatPercentage, formatUSD } from "$lib";
+    import {
+        formatDecimal,
+        formatPercentage,
+        formatUSD,
+        compareFn,
+    } from "$lib";
 
     import CallToLogin from "$lib/components/CallToLogin.svelte";
     import HeaderCell from "$lib/components/HeaderCell.svelte";
@@ -25,26 +30,7 @@
                     .includes(searchQuery.toLowerCase())
             );
         })
-        .sort((a, b) => {
-            let ap = _.get(a, sortProperty);
-            let bp = _.get(b, sortProperty);
-
-            if (typeof ap == "string") {
-                ap = ap.toLowerCase();
-            }
-            if (typeof bp == "string") {
-                bp = bp.toLowerCase();
-            }
-
-            if (_.isNil(ap)) {
-                return sortDirection;
-            }
-            if (_.isNil(bp)) {
-                return -sortDirection;
-            }
-
-            return sortDirection * (ap === bp ? 0 : ap < bp ? -1 : 1);
-        });
+        .sort(compareFn(sortProperty, sortDirection));
 
     let headers: [keyof Data.AssetBalanceFlat, string][] = [
         ["assetsSymbol", "Актив"],

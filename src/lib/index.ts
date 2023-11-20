@@ -41,6 +41,29 @@ export function logSensitive(...data: unknown[]) {
     }
 }
 
+export function compareFn<T>(sortProperty: keyof T, sortDirection: number) {
+    return (a: T, b: T) => {
+        let ap = _.get(a, sortProperty);
+        let bp = _.get(b, sortProperty);
+
+        if (typeof ap == "string") {
+            ap = ap.toLowerCase();
+        }
+        if (typeof bp == "string") {
+            bp = bp.toLowerCase();
+        }
+
+        if (_.isNil(ap)) {
+            return sortDirection;
+        }
+        if (_.isNil(bp)) {
+            return -sortDirection;
+        }
+
+        return sortDirection * (ap === bp ? 0 : ap < bp ? -1 : 1);
+    }
+}
+
 function cleanNumber(value: string | number | undefined): number | undefined {
     let numberValue: number | undefined;
 

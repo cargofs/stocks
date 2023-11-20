@@ -5,7 +5,7 @@
     import RefreshButton from "$lib/components/RefreshButton.svelte";
 
     import _ from "lodash";
-    import { formatPercentage, formatUSD } from "$lib";
+    import { compareFn, formatPercentage, formatUSD } from "$lib";
 
     export let data: PageData;
 
@@ -23,26 +23,7 @@
                     .includes(searchQuery.toLowerCase())
             );
         })
-        .sort((a, b) => {
-            let ap = _.get(a, sortProperty);
-            let bp = _.get(b, sortProperty);
-
-            if (typeof ap == "string") {
-                ap = ap.toLowerCase();
-            }
-            if (typeof bp == "string") {
-                bp = bp.toLowerCase();
-            }
-
-            if (_.isNil(ap)) {
-                return sortDirection;
-            }
-            if (_.isNil(bp)) {
-                return -sortDirection;
-            }
-
-            return sortDirection * (ap === bp ? 0 : ap < bp ? -1 : 1);
-        });
+        .sort(compareFn(sortProperty, sortDirection));
 
     let headers: [keyof Data.UserScoreFlat, string][] = [
         ["login", "Имя пользователя"],
