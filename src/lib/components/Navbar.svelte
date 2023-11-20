@@ -9,6 +9,7 @@
         { path: "/", name: "Главная" },
         { path: "/prices", name: "Биржа" },
         { path: "/leaderboard", name: "Таблица лидеров" },
+        { path: "/history", name: "История операций" },
         {
             iconClasses: "fa-solid fa-user",
             name: _.isNil(login) ? "Учётная запись" : login,

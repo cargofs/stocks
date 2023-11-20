@@ -163,6 +163,14 @@ declare global {
             assets: AssetBalanceFlat[]
             changeCost: ChangeCost
         }
+
+        interface Order {
+            id: number
+            assetsSymbol: string
+            assetsCount: number
+            money: number
+            date: string
+        }
     }
 }
 
