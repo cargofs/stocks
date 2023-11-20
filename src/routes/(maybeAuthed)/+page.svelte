@@ -1,5 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { invalidate } from "$app/navigation";
     import _ from "lodash";
 
     import type { PageData } from "./$types";
@@ -15,6 +16,14 @@
     import RefreshButton from "$lib/components/RefreshButton.svelte";
 
     export let data: PageData;
+
+    $: haveBalanceData = !_.isNil(data.balanceInfo);
+    $: showData = !_.isNil($page.data.login) && haveBalanceData;
+    $: {
+        if (!_.isNil($page.data.login) && !haveBalanceData) {
+            invalidate("app:token");
+        }
+    }
 
     let searchQuery = "";
 
@@ -42,7 +51,7 @@
 </script>
 
 <div class="content">
-    {#if _.isNil($page.data.login)}
+    {#if !showData}
         <section class="hero">
             <div class="hero-body">
                 <p class="title">Добро пожаловать в CoinStocks!</p>
