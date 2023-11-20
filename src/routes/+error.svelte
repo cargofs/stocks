@@ -2,6 +2,7 @@
     import { dev } from "$app/environment";
     import { page } from "$app/stores";
     import { APIStatusCode } from "$lib";
+    import _ from "lodash";
 
     $: isTokenError =
         $page.error?.apiStatusCode &&
@@ -13,9 +14,9 @@
 
 <div class="content">
     <h1>
-        Ошибка {$page.status}{$page.error?.apiStatusCode
-            ? ` (${$page.error?.apiStatusCode})`
-            : ""}
+        Ошибка {$page.status}{_.isNil($page.error?.apiStatusCode)
+            ? ""
+            : ` (${$page.error?.apiStatusCode})`}
     </h1>
 
     <p><i>{$page.error?.message ?? ""}</i></p>
