@@ -92,11 +92,11 @@
                             <tr>
                                 <td class="is-family-monospace">{order.id}</td>
                                 <td
-                                    >{DateTime.fromISO(
-                                        order.date
-                                    ).toLocaleString(
-                                        DateTime.DATETIME_MED_WITH_SECONDS
-                                    )}</td
+                                    >{DateTime.fromISO(order.date)
+                                        .setLocale("ru")
+                                        .toLocaleString(
+                                            DateTime.DATETIME_MED_WITH_SECONDS
+                                        )}</td
                                 >
                                 <td>
                                     <a
