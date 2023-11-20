@@ -79,7 +79,7 @@ export const actions = {
             throw error(400, { message: "Не указана сумма актива или она равна нулю" });
         }
 
-        const apiResponse: Data.APINormalResponse<null> = await api(fetch, "POST", "orders/sail", {
+        const apiResponse: Data.APINormalResponse<null> = await api(fetch, "POST", "orders/sell", {
             assetsSymbol: symbol,
             assetsCount: _.round(pendingAssets, 10)
         }, locals.token, { cookies });
@@ -107,7 +107,7 @@ export const actions = {
             throw error(400, { message: "Не указан актив" });
         }
 
-        const apiResponse: Data.APINormalResponse<null> = await api(fetch, "POST", "orders/sail/all", {
+        const apiResponse: Data.APINormalResponse<null> = await api(fetch, "POST", "orders/sell/all", {
             assetsSymbol: symbol,
         }, locals.token, { cookies });
 
