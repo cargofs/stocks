@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { PageData } from "./$types";
 
-    import LeaderboardHeaderCell from "$lib/components/LeaderboardHeaderCell.svelte";
+    import HeaderCell from "$lib/components/HeaderCell.svelte";
     import RefreshButton from "$lib/components/RefreshButton.svelte";
 
     import _ from "lodash";
@@ -46,8 +46,8 @@
 
     let headers: [keyof Data.UserScoreFlat, string][] = [
         ["login", "Имя пользователя"],
-        ["spentUsd", "Баланс относительно начального"],
-        ["costUsd", "Стоимость активов"],
+        ["spentUsd", "Потрачено на активы"],
+        ["costUsd", "Текущая стоимость активов"],
         ["percent", "Процент выигрыша"],
     ];
 </script>
@@ -70,11 +70,11 @@
 
 {#if sortedLeaderboard.length > 0}
     <div class="table-container">
-        <table class="table is-hoverable is-striped is-bordered">
+        <table class="table is-hoverable is-striped is-bordered is-fullwidth">
             <thead>
                 <tr>
                     {#each headers as header}
-                        <LeaderboardHeaderCell
+                        <HeaderCell
                             bind:sortProperty
                             bind:sortDirection
                             property={header[0]}

@@ -1,11 +1,11 @@
-<script lang="ts">
-    export let property: keyof Data.UserScoreFlat;
+<script lang="ts" generics="T">
+    export let property: T;
     export let name: string;
 
-    export let sortProperty: string;
+    export let sortProperty: T;
     export let sortDirection: number;
 
-    function setSearchBy(property: keyof Data.UserScoreFlat) {
+    function setSearchBy(property: T) {
         if (sortProperty == property) {
             sortDirection = -sortDirection;
         } else {

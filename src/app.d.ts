@@ -143,6 +143,26 @@ declare global {
             assetsCount: number
             changeCost: ChangeCost
         }
+
+        interface AssetBalanceFlat {
+            assetsSymbol: string
+            assetsCount: number
+            spentUsd: number
+            costUsd: number
+            percent: number
+        }
+
+        interface FullBalanceInfo {
+            usdMoney: number
+            assets: AssetBalance[]
+            changeCost: ChangeCost
+        }
+
+        interface FullBalanceInfoFlat {
+            usdMoney: number
+            assets: AssetBalanceFlat[]
+            changeCost: ChangeCost
+        }
     }
 }
 

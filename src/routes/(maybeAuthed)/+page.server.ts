@@ -1,6 +1,8 @@
 import { APIStatusCode, CookieName, genericServerError } from '$lib';
 import { api } from '$lib/server/api';
 import { error, type Actions } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
+import _ from 'lodash';
 
 export const actions = {
     logout: async ({ cookies, fetch, locals }) => {
@@ -20,3 +22,31 @@ export const actions = {
         }
     },
 } satisfies Actions;
+
+export const load = (async ({ fetch, depends, cookies, locals }) => {
+    depends("app:token");
+    depends("app:balances");
+
+    let balanceInfo: Data.FullBalanceInfoFlat | undefined;
+    if (locals.token) {
+        const response: Data.APINormalResponse<Data.FullBalanceInfo> = await api(fetch, "GET", "balance/info", null, locals.token, { cookies });
+
+        if (!_.isNil(response.data)) {
+            balanceInfo = {
+                ...response.data,
+                assets: response.data.assets.map(asset => {
+                    return {
+                        ..._.pick(asset, "assetsCount", "assetsSymbol"),
+                        ...asset.changeCost
+                    } satisfies Data.AssetBalanceFlat;
+                })
+            }
+        } else {
+            throw genericServerError(response.statusCode);
+        }
+    }
+
+    return {
+        balanceInfo
+    }
+}) satisfies PageServerLoad;
