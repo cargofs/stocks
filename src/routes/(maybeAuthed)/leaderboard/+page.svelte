@@ -2,6 +2,7 @@
     import type { PageData } from "./$types";
 
     import LeaderboardHeaderCell from "$lib/components/LeaderboardHeaderCell.svelte";
+    import RefreshButton from "$lib/components/RefreshButton.svelte";
 
     import _ from "lodash";
     import { formatPercentage, formatUSD } from "$lib";
@@ -60,6 +61,10 @@
             maxlength="200"
             placeholder="Поиск по имени пользователя"
         />
+    </div>
+
+    <div class="control">
+        <RefreshButton invalidationURL="app:leaderboard" />
     </div>
 </div>
 

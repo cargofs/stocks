@@ -17,6 +17,7 @@
     import { priceViews } from "$lib/priceViews";
     import { page } from "$app/stores";
     import { enhance } from "$app/forms";
+    import RefreshButton from "$lib/components/RefreshButton.svelte";
 
     export let data: PageData;
 
@@ -97,15 +98,10 @@
                         </div>
 
                         <div class="control">
-                            <button
-                                class="button is-danger is-light"
-                                on:click={async () => {
-                                    await invalidate("app:prices");
-                                    reset();
-                                }}
-                            >
-                                <i class="fa-solid fa-refresh" />
-                            </button>
+                            <RefreshButton
+                                invalidationURL="app:prices"
+                                additionalAction={reset}
+                            />
                         </div>
                     </div>
                 </div>
