@@ -62,7 +62,9 @@
 </script>
 
 <div class="columns is-desktop">
-    <div class="column is-half-desktop is-three-quarters-widescreen">
+    <div
+        class="column is-half-desktop is-two-thirds-widescreen is-three-quarters-fullhd"
+    >
         <div class="level">
             <div class="level-left">
                 <div class="level-item">
