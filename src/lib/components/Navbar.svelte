@@ -10,7 +10,7 @@
         { path: "/leaderboard", name: "Таблица лидеров" },
         {
             iconClasses: "fa-solid fa-user",
-            name: login == undefined ? "Учётная запись" : login,
+            name: _.isNil(login) ? "Учётная запись" : login,
             inner: [
                 {
                     path: $page.url.pathname.startsWith("/account")
@@ -22,7 +22,7 @@
                               $page.url.pathname
                           )}&explicit=1`,
                     name: "Регистрация",
-                    condition: login == undefined,
+                    condition: _.isNil(login),
                 },
                 {
                     path: $page.url.pathname.startsWith("/account")
@@ -34,12 +34,12 @@
                               $page.url.pathname
                           )}&explicit=1`,
                     name: "Вход",
-                    condition: login == undefined,
+                    condition: _.isNil(login),
                 },
                 {
                     logout: true,
                     name: "Выйти",
-                    condition: login != undefined,
+                    condition: !_.isNil(login),
                     preload: false,
                 },
             ],

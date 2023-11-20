@@ -26,9 +26,9 @@
 
     $: haveBalances =
         data.usdBalance !== undefined && data.assetBalance !== undefined;
-    $: showTradingUI = $page.data.login && haveBalances;
+    $: showTradingUI = !_.isNil($page.data.login) && haveBalances;
     $: {
-        if ($page.data.login && !haveBalances) {
+        if (!_.isNil($page.data.login) && !haveBalances) {
             invalidate("app:token");
         }
     }
