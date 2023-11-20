@@ -1,5 +1,6 @@
 import { dev } from '$app/environment';
 import { error } from '@sveltejs/kit';
+import _ from 'lodash';
 
 export const DEFAULT_SYMBOL = "BTC";
 
@@ -55,7 +56,7 @@ function cleanNumber(value: string | number | undefined): number | undefined {
 export function formatPercentage(value: string | number | undefined, signForPositive: boolean): string {
     const numberValue = cleanNumber(value);
 
-    if (numberValue === undefined) {
+    if (_.isNil(numberValue)) {
         return "??? %"
     }
 
@@ -71,7 +72,7 @@ export function formatPercentage(value: string | number | undefined, signForPosi
 export function formatDecimal(value: string | number | undefined, signForPositive: boolean): string {
     const numberValue = cleanNumber(value);
 
-    if (numberValue === undefined) {
+    if (_.isNil(numberValue)) {
         return `???`
     }
 
@@ -87,7 +88,7 @@ export function formatDecimal(value: string | number | undefined, signForPositiv
 export function formatUSD(value: string | number | undefined, signForPositive: boolean): string {
     const numberValue = cleanNumber(value);
 
-    if (numberValue === undefined) {
+    if (_.isNil(numberValue)) {
         return "??? $"
     }
 
