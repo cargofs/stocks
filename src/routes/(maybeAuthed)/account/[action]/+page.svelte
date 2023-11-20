@@ -16,6 +16,8 @@
 
     let knownTakenLogins: string[] = [];
     let loginOrPasswordWasWrong = false;
+
+    let loading = false;
 </script>
 
 <div class="content">
@@ -62,6 +64,8 @@
             } else {
                 update();
             }
+
+            loading = false;
         };
     }}
 >
@@ -161,8 +165,12 @@
         <p class="control">
             <button
                 class="button is-danger"
+                class:is-loading={loading}
                 formaction={data.action == "login" ? "?/login" : "?/create"}
                 type="submit"
+                on:click={() => {
+                    loading = true;
+                }}
                 disabled={login.length == 0 ||
                     !loginOk ||
                     password.length == 0 ||
