@@ -45,7 +45,7 @@
 
     let headers: [keyof Data.UserScoreFlat, string][] = [
         ["login", "Имя пользователя"],
-        ["spentUsd", "Потрачено"],
+        ["spentUsd", "Баланс относительно начального"],
         ["costUsd", "Стоимость активов"],
         ["percent", "Процент выигрыша"],
     ];
