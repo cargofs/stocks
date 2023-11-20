@@ -275,7 +275,9 @@
                             type="submit"
                             formaction="?/buyAssets"
                             disabled={(anyLoading && !buyAssetsLoading) ||
-                                pendingUSD < 0.01}
+                                !data.usdBalance ||
+                                pendingUSD < 0.01 ||
+                                pendingUSD > data.usdBalance}
                         >
                             Купить {data.symbol} за {formatUSD(
                                 pendingUSD,
