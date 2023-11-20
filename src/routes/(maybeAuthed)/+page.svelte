@@ -117,9 +117,7 @@
 
         {#if sortedBalances.length > 0}
             <div class="table-container">
-                <table
-                    class="table is-hoverable is-striped is-bordered is-fullwidth"
-                >
+                <table class="table is-hoverable is-fullwidth">
                     <thead>
                         <tr>
                             {#each headers as header}
