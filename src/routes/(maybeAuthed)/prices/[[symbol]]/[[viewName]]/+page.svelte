@@ -17,7 +17,9 @@
     import { priceViews } from "$lib/priceViews";
     import { page } from "$app/stores";
     import { enhance } from "$app/forms";
+
     import RefreshButton from "$lib/components/RefreshButton.svelte";
+    import CallToLogin from "$lib/components/CallToLogin.svelte";
 
     export let data: PageData;
 
@@ -382,17 +384,7 @@
         <div class="content">
             <article class="message">
                 <div class="message-body">
-                    <a
-                        href={`/account/login?continue=${encodeURIComponent(
-                            $page.url.pathname
-                        )}&explicit=1`}>Войдите</a
-                    >
-                    в учётную запись или
-                    <a
-                        href={`/account/create?continue=${encodeURIComponent(
-                            $page.url.pathname
-                        )}&explicit=1`}>создайте новую</a
-                    >, чтобы играть.
+                    <CallToLogin purpose="играть" />
                 </div>
             </article>
         </div>

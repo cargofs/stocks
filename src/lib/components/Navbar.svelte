@@ -6,6 +6,7 @@
     $: login = $page.data.login;
 
     $: targets = [
+        { path: "/", name: "Главная" },
         { path: "/prices", name: "Биржа" },
         { path: "/leaderboard", name: "Таблица лидеров" },
         {
