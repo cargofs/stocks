@@ -226,14 +226,6 @@
                         } else if (
                             result.type === "error" &&
                             result.error?.apiStatusCode ==
-                                APIStatusCode.LACK_OF_RESOURCES
-                        ) {
-                            await invalidate("app:prices");
-                            reset();
-                            lackOfAssets = true;
-                        } else if (
-                            result.type === "error" &&
-                            result.error?.apiStatusCode ==
                                 APIStatusCode.VALIDATION_ERROR_USD
                         ) {
                             await invalidate("app:prices");
@@ -305,6 +297,32 @@
                         </button>
                     </div>
                 </div>
+            </form>
+
+            <form
+                method="POST"
+                use:enhance={() => {
+                    return async ({ result, update }) => {
+                        console.log(result);
+
+                        if (result.type === "success") {
+                            await invalidate("app:prices");
+                            reset();
+                        } else if (
+                            result.type === "error" &&
+                            result.error?.apiStatusCode ==
+                                APIStatusCode.LACK_OF_RESOURCES
+                        ) {
+                            await invalidate("app:prices");
+                            reset();
+                            lackOfAssets = true;
+                        } else {
+                            update();
+                        }
+                    };
+                }}
+            >
+                <input type="hidden" name="symbol" value={data.symbol} />
 
                 <div class="block has-text-centered mt-5">
                     <div>
@@ -364,10 +382,28 @@
                         </button>
                     </div>
                 </div>
+            </form>
 
-                <div class="content">
-                    <hr />
-                </div>
+            <div class="content">
+                <hr />
+            </div>
+
+            <form
+                method="POST"
+                use:enhance={() => {
+                    return async ({ result, update }) => {
+                        console.log(result);
+
+                        if (result.type === "success") {
+                            await invalidate("app:prices");
+                            reset();
+                        } else {
+                            update();
+                        }
+                    };
+                }}
+            >
+                <input type="hidden" name="symbol" value={data.symbol} />
 
                 <div class="field">
                     <div class="control">
