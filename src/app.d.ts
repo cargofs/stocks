@@ -4,6 +4,7 @@ declare global {
     namespace App {
         interface Error {
             apiStatusCode?: APIStatusCode
+            httpStatusCode?: number
         }
 
         interface Locals {

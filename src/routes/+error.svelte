@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { dev } from "$app/environment";
     import { page } from "$app/stores";
     import { APIStatusCode } from "$lib";
@@ -10,13 +10,28 @@
             APIStatusCode.WRONG_TOKEN,
             APIStatusCode.TOKEN_EXPIRED_NEED_LOGIN,
         ].includes($page.error?.apiStatusCode);
+
+    let errorCodeString: string | undefined = undefined;
+
+    $: {
+        if (
+            !_.isNil($page.error?.apiStatusCode) &&
+            !_.isNil($page.error?.httpStatusCode)
+        ) {
+            errorCodeString = `${$page.error?.httpStatusCode}, ${$page.error?.apiStatusCode}`;
+        } else if (!_.isNil($page.error?.apiStatusCode)) {
+            errorCodeString = `${$page.error?.apiStatusCode}`;
+        } else if (!_.isNil($page.error?.httpStatusCode)) {
+            errorCodeString = `${$page.error?.httpStatusCode}`;
+        }
+    }
 </script>
 
 <div class="content">
     <h1>
-        Ошибка {$page.status}{_.isNil($page.error?.apiStatusCode)
+        Ошибка {$page.status}{_.isNil(errorCodeString)
             ? ""
-            : ` (${$page.error?.apiStatusCode})`}
+            : ` (${errorCodeString})`}
     </h1>
 
     <p><i>{$page.error?.message ?? ""}</i></p>
