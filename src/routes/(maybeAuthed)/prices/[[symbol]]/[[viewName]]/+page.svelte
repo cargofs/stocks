@@ -44,6 +44,7 @@
     let pendingAssets = 0;
 
     let lackOfAssets = false;
+    let lackOfUSD = false;
 
     let buyAssetsLoading = false;
     let sellAssetsLoading = false;
@@ -56,6 +57,7 @@
         pendingAssets = 0;
 
         lackOfAssets = false;
+        lackOfUSD = false;
 
         buyAssetsLoading = false;
         sellAssetsLoading = false;
@@ -226,9 +228,17 @@
                             result.error?.apiStatusCode ==
                                 APIStatusCode.LACK_OF_RESOURCES
                         ) {
-                            lackOfAssets = true;
                             await invalidate("app:prices");
                             reset();
+                            lackOfAssets = true;
+                        } else if (
+                            result.type === "error" &&
+                            result.error?.apiStatusCode ==
+                                APIStatusCode.VALIDATION_ERROR_USD
+                        ) {
+                            await invalidate("app:prices");
+                            reset();
+                            lackOfUSD = true;
                         } else {
                             update();
                         }
@@ -255,6 +265,8 @@
                             name="pendingUSD"
                             bind:value={pendingUSD}
                             on:input={(event) => {
+                                lackOfUSD = false;
+
                                 pendingAssets = _.round(
                                     _.toNumber(event.currentTarget.value) /
                                         currentPrice,
@@ -266,6 +278,9 @@
                             <i class="fa-solid fa-dollar-sign" />
                         </span>
                     </p>
+                    {#if lackOfUSD}
+                        <p class="help is-danger">Недостаточно долларов</p>
+                    {/if}
                 </div>
 
                 <div class="field">
@@ -325,9 +340,7 @@
                         </span>
                     </p>
                     {#if lackOfAssets}
-                        <p class="help is-danger">
-                            Недостаточно активов для продажи
-                        </p>
+                        <p class="help is-danger">Недостаточно активов</p>
                     {/if}
                 </div>
 

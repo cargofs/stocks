@@ -53,6 +53,11 @@ export const actions = {
 
         if (apiResponse.statusCode == APIStatusCode.SUCCESS) {
             return {};
+        } else if (apiResponse.statusCode == APIStatusCode.VALIDATION_ERROR_USD) {
+            throw error(400, {
+                apiStatusCode: apiResponse.statusCode,
+                message: "Недостаточно долларов"
+            });
         } else {
             throw genericServerError(apiResponse.statusCode);
         }
