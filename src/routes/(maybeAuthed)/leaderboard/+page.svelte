@@ -104,9 +104,3 @@
         <p>Не найдено ни одного пользователя</p>
     </div>
 {/if}
-
-<style>
-    td {
-        width: max-content;
-    }
-</style>
