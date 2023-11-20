@@ -43,11 +43,21 @@
 
     let lackOfAssets = false;
 
+    let buyAssetsLoading = false;
+    let sellAssetsLoading = false;
+    let sellAllAssetsLoading = false;
+    $: anyLoading =
+        buyAssetsLoading || sellAssetsLoading || sellAllAssetsLoading;
+
     function reset() {
         pendingUSD = 0;
         pendingAssets = 0;
 
         lackOfAssets = false;
+
+        buyAssetsLoading = false;
+        sellAssetsLoading = false;
+        sellAllAssetsLoading = false;
     }
 </script>
 
@@ -258,9 +268,14 @@
                     <div class="control">
                         <button
                             class="button is-danger is-fullwidth"
+                            class:is-loading={buyAssetsLoading}
+                            on:click={() => {
+                                buyAssetsLoading = true;
+                            }}
                             type="submit"
                             formaction="?/buyAssets"
-                            disabled={pendingUSD < 0.01}
+                            disabled={(anyLoading && !buyAssetsLoading) ||
+                                pendingUSD < 0.01}
                         >
                             Купить {data.symbol} за {formatUSD(
                                 pendingUSD,
@@ -314,9 +329,14 @@
                     <div class="control">
                         <button
                             class="button is-danger is-fullwidth"
+                            class:is-loading={sellAssetsLoading}
+                            on:click={() => {
+                                sellAssetsLoading = true;
+                            }}
                             type="submit"
                             formaction="?/sellAssets"
-                            disabled={!data.assetBalance ||
+                            disabled={(anyLoading && !sellAssetsLoading) ||
+                                !data.assetBalance ||
                                 pendingAssets <= 0 ||
                                 pendingAssets > data.assetBalance}
                         >
@@ -334,9 +354,14 @@
                     <div class="control">
                         <button
                             class="button is-danger is-fullwidth"
+                            class:is-loading={sellAllAssetsLoading}
+                            on:click={() => {
+                                sellAllAssetsLoading = true;
+                            }}
                             type="submit"
                             formaction="?/sellAllAssets"
-                            disabled={!data.assetBalance ||
+                            disabled={(anyLoading && !sellAllAssetsLoading) ||
+                                !data.assetBalance ||
                                 data.assetBalance <= 0}
                         >
                             Продать все {formatDecimal(
