@@ -61,11 +61,15 @@
             "xLabels",
             "yLabels",
             "labels",
-            ..._.range(chart.data.datasets.length).map(
-                (i) => `datasets[${i}].data`
-            ),
+            ..._.range(chart.data.datasets.length).map((i) => `datasets[${i}]`),
         ]) {
-            _.set(chart.data, path, _.get(data, path));
+            if (path.startsWith("datasets")) {
+                _.forOwn(_.get(chart.data, path), (_v, k, object) => {
+                    _.set(object, k, _.get(data, path + "." + k));
+                });
+            } else {
+                _.set(chart.data, path, _.get(data, path));
+            }
         }
 
         _.assign(chart.options, options);
