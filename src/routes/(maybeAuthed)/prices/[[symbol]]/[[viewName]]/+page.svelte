@@ -23,6 +23,7 @@
 
     export let data: PageData;
 
+    $: firstPrice = _.toNumber(_.first(data.prices)?.open ?? 0);
     $: currentPrice =
         data.briefs.find((brief) => brief.symbol == data.symbol)?.price ?? 0;
 
@@ -181,7 +182,12 @@
                             [currentPrice]
                         ),
                         fill: true,
-                        borderColor: "#f14668",
+                        borderColor:
+                            firstPrice == currentPrice
+                                ? "hsl(48, 100%, 67%)"
+                                : firstPrice < currentPrice
+                                ? "hsl(141, 71%, 48%)"
+                                : "hsl(217, 71%, 53%)",
                         tension: 0.1,
                     },
                 ],
