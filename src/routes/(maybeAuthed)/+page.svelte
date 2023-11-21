@@ -110,7 +110,7 @@
                             "USD",
                             (data.balanceInfo?.assets ?? [])
                                 .filter((asset) => asset.costUsd > 0)
-                                .sort(compareFn("costUsd", -1))
+                                .sort(compareFn(sortProperty, sortDirection))
                                 .map((asset) => asset.assetsSymbol)
                         ),
                         datasets: [
@@ -120,7 +120,12 @@
                                     data.balanceInfo?.usdMoney ?? 0,
                                     (data.balanceInfo?.assets ?? [])
                                         .filter((asset) => asset.costUsd > 0)
-                                        .sort(compareFn("costUsd", -1))
+                                        .sort(
+                                            compareFn(
+                                                sortProperty,
+                                                sortDirection
+                                            )
+                                        )
                                         .map((asset) => asset.costUsd)
                                 ),
                             },
