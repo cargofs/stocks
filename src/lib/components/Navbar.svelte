@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { dev } from "$app/environment";
     import { page } from "$app/stores";
     import NavbarItem from "$lib/components/NavbarItem.svelte";
     import _ from "lodash";
@@ -12,7 +13,11 @@
         { path: "/history", name: "История операций" },
         {
             iconClasses: "fa-solid fa-user",
-            name: _.isNil(login) ? "Учётная запись" : login,
+            name: _.isNil(login)
+                ? "Учётная запись"
+                : dev
+                ? `${login} (${$page.data.id})`
+                : login,
             inner: [
                 {
                     path: $page.url.pathname.startsWith("/account")
@@ -90,7 +95,9 @@
     aria-label="Основная навигация"
 >
     <div class="navbar-brand">
-        <a class="navbar-item is-size-5" href="/">CoinStocks</a>
+        <a class="navbar-item is-size-5" href="/"
+            >CoinStocks{dev ? " (dev)" : ""}</a
+        >
 
         <a
             role="button"

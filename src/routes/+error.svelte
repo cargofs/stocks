@@ -53,6 +53,6 @@
     </a>
 
     {#if dev}
-        <pre>Debug: {JSON.stringify($page.error)}</pre>
+        {@debug $page}
     {/if}
 </div>
