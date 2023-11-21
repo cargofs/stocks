@@ -126,6 +126,12 @@
                     }}
                     options={{
                         plugins: {
+                            legend: {
+                                title: {
+                                    text: "Текущая стоимость",
+                                    display: true,
+                                },
+                            },
                             tooltip: {
                                 callbacks: {
                                     label: function (context) {
