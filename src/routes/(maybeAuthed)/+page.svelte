@@ -108,18 +108,18 @@
                     data={{
                         labels: _.concat(
                             "USD",
-                            (data.balanceInfo?.assets ?? []).map(
-                                (asset) => asset.assetsSymbol
-                            )
+                            (data.balanceInfo?.assets ?? [])
+                                .filter((asset) => asset.costUsd > 0)
+                                .map((asset) => asset.assetsSymbol)
                         ),
                         datasets: [
                             {
                                 label: "Текущая стоимость",
                                 data: _.concat(
                                     data.balanceInfo?.usdMoney ?? 0,
-                                    (data.balanceInfo?.assets ?? []).map(
-                                        (asset) => asset.costUsd
-                                    )
+                                    (data.balanceInfo?.assets ?? [])
+                                        .filter((asset) => asset.costUsd > 0)
+                                        .map((asset) => asset.costUsd)
                                 ),
                             },
                         ],
