@@ -42,7 +42,7 @@
         .sort(compareFn(sortProperty, sortDirection));
 
     let headers: [keyof Data.Order, string][] = [
-        ["id", "Идентификатор транзакции"],
+        ["id", "Идентификатор операции"],
         ["date", "Дата"],
         ["assetsSymbol", "Актив"],
         ["assetsCount", "Изменение актива"],
@@ -67,7 +67,7 @@
                     type="text"
                     bind:value={searchQuery}
                     maxlength="200"
-                    placeholder="Поиск по названию актива или идентификатору транзакции"
+                    placeholder="Поиск по названию актива или идентификатору операции"
                 />
             </div>
 
