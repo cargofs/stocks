@@ -18,7 +18,7 @@
         loading = false;
     }
 
-    let autoEnabled: boolean = true;
+    let autoEnabled: boolean = false;
     const autoDelay = 5000;
 
     async function autoRefresh() {
