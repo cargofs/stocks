@@ -50,9 +50,15 @@
 
     function recalculate() {
         if (lastChangedAssets) {
+            if (pendingAssets <= 0) {
+                return;
+            }
             pendingUSD = _.round(_.toNumber(pendingAssets) * currentPrice, 2);
             lackOfUSD = false;
         } else {
+            if (pendingUSD <= 0) {
+                return;
+            }
             pendingAssets = _.round(_.toNumber(pendingUSD) / currentPrice, 10);
             lackOfAssets = false;
         }
