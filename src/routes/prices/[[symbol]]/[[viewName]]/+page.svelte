@@ -448,12 +448,14 @@
             </form>
         </div>
     {:else}
-        <div class="content">
-            <article class="message">
-                <div class="message-body">
-                    <CallToLogin purpose="играть" />
-                </div>
-            </article>
+        <div class="column">
+            <div class="content">
+                <article class="message">
+                    <div class="message-body">
+                        <CallToLogin purpose="играть" />
+                    </div>
+                </article>
+            </div>
         </div>
     {/if}
 </div>
