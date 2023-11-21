@@ -19,6 +19,7 @@
 
     import RefreshButton from "$lib/components/RefreshButton.svelte";
     import CallToLogin from "$lib/components/CallToLogin.svelte";
+    import { onMount } from "svelte";
 
     export let data: PageData;
 
@@ -46,6 +47,18 @@
     let lackOfAssets = false;
     let lackOfUSD = false;
 
+    let lastChangedAssets = true;
+
+    function recalculate() {
+        if (lastChangedAssets) {
+            pendingUSD = _.round(_.toNumber(pendingAssets) * currentPrice, 2);
+            lackOfUSD = false;
+        } else {
+            pendingAssets = _.round(_.toNumber(pendingUSD) / currentPrice, 10);
+            lackOfAssets = false;
+        }
+    }
+
     let buyAssetsLoading = false;
     let sellAssetsLoading = false;
     let sellAllAssetsLoading = false;
@@ -53,12 +66,6 @@
         buyAssetsLoading || sellAssetsLoading || sellAllAssetsLoading;
 
     function reset() {
-        pendingUSD = 0;
-        pendingAssets = 0;
-
-        lackOfAssets = false;
-        lackOfUSD = false;
-
         buyAssetsLoading = false;
         sellAssetsLoading = false;
         sellAllAssetsLoading = false;
@@ -272,12 +279,8 @@
                             bind:value={pendingUSD}
                             on:input={(event) => {
                                 lackOfUSD = false;
-
-                                pendingAssets = _.round(
-                                    _.toNumber(event.currentTarget.value) /
-                                        currentPrice,
-                                    10
-                                );
+                                lastChangedAssets = false;
+                                recalculate();
                             }}
                         />
                         <span class="icon is-small is-left">
@@ -359,12 +362,8 @@
                             bind:value={pendingAssets}
                             on:input={(event) => {
                                 lackOfAssets = false;
-
-                                pendingUSD = _.round(
-                                    _.toNumber(event.currentTarget.value) *
-                                        currentPrice,
-                                    2
-                                );
+                                lastChangedAssets = true;
+                                recalculate();
                             }}
                         />
                         <span class="icon is-small is-left">
