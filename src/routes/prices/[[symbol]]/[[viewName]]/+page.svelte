@@ -193,7 +193,7 @@
                                 : firstPrice < currentPrice
                                 ? "hsl(141, 71%, 48%)"
                                 : "hsl(217, 71%, 53%)",
-                        tension: 0.1,
+                        tension: 0.3,
                     },
                 ],
             }}
