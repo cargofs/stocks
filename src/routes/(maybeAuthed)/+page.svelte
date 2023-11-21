@@ -1,4 +1,8 @@
 <script lang="ts">
+    import LivePie from "$lib/components/charts/LivePie.svelte";
+    import "chart.js/auto";
+    import "chartjs-adapter-luxon";
+
     import { page } from "$app/stores";
     import { invalidate } from "$app/navigation";
     import _ from "lodash";
@@ -94,108 +98,175 @@
             </div>
         </div>
 
-        <div class="field is-grouped">
-            <div class="control is-expanded">
-                <input
-                    class="input is-danger"
-                    type="text"
-                    bind:value={searchQuery}
-                    maxlength="200"
-                    placeholder="Поиск по названию актива"
+        <div class="content">
+            <hr />
+        </div>
+
+        <div class="columns is-centered is-mobile is-multiline">
+            <div class="column is-4">
+                <LivePie
+                    data={{
+                        labels: _.concat(
+                            "USD",
+                            (data.balanceInfo?.assets ?? []).map(
+                                (asset) => asset.assetsSymbol
+                            )
+                        ),
+                        datasets: [
+                            {
+                                label: "Текущая стоимость",
+                                data: _.concat(
+                                    data.balanceInfo?.usdMoney ?? 0,
+                                    (data.balanceInfo?.assets ?? []).map(
+                                        (asset) => asset.costUsd
+                                    )
+                                ),
+                            },
+                        ],
+                    }}
+                    options={{
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        let label = context.dataset.label || "";
+
+                                        if (label) {
+                                            label += ": ";
+                                        }
+                                        if (context.parsed !== null) {
+                                            label += formatUSD(
+                                                context.parsed,
+                                                false
+                                            );
+                                        }
+                                        return label;
+                                    },
+                                },
+                            },
+                        },
+                    }}
                 />
             </div>
 
-            <div class="control">
-                <RefreshButton invalidationURL="app:balances" />
+            <div class="column">
+                <div class="field is-grouped">
+                    <div class="control is-expanded">
+                        <input
+                            class="input is-danger"
+                            type="text"
+                            bind:value={searchQuery}
+                            maxlength="200"
+                            placeholder="Поиск по названию актива"
+                        />
+                    </div>
+
+                    <div class="control">
+                        <RefreshButton invalidationURL="app:balances" />
+                    </div>
+                </div>
+
+                {#if sortedBalances.length > 0}
+                    <div class="table-container">
+                        <table class="table is-hoverable is-fullwidth">
+                            <thead>
+                                <tr>
+                                    {#each headers as header}
+                                        <HeaderCell
+                                            bind:sortProperty
+                                            bind:sortDirection
+                                            property={header[0]}
+                                            name={header[1]}
+                                        />
+                                    {/each}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {#each sortedBalances as balance}
+                                    <tr>
+                                        <td>
+                                            <a
+                                                class="has-text-danger"
+                                                href={"/prices/" +
+                                                    encodeURIComponent(
+                                                        balance.assetsSymbol
+                                                    )}>{balance.assetsSymbol}</a
+                                            >
+                                        </td>
+                                        <td
+                                            >{formatDecimal(
+                                                balance.assetsCount,
+                                                false
+                                            )}</td
+                                        >
+                                        <td
+                                            >{formatUSD(
+                                                balance.spentUsd,
+                                                false
+                                            )}</td
+                                        >
+                                        <td
+                                            >{formatUSD(
+                                                balance.costUsd,
+                                                false
+                                            )}</td
+                                        >
+                                        <td
+                                            >{formatPercentage(
+                                                balance.percent,
+                                                true
+                                            )}</td
+                                        >
+                                    </tr>
+                                {/each}
+                            </tbody>
+                            {#if searchQuery.length == 0}
+                                <tfoot>
+                                    <tr>
+                                        <th>Итого</th>
+                                        <th />
+                                        <th
+                                            >{formatUSD(
+                                                data.balanceInfo?.changeCost
+                                                    .spentUsd,
+                                                false
+                                            )}</th
+                                        >
+                                        <th
+                                            >{formatUSD(
+                                                data.balanceInfo?.changeCost
+                                                    .costUsd,
+                                                false
+                                            )}</th
+                                        >
+                                        <th
+                                            >{formatPercentage(
+                                                data.balanceInfo?.changeCost
+                                                    .percent,
+                                                true
+                                            )}</th
+                                        >
+                                    </tr>
+                                </tfoot>
+                            {/if}
+                        </table>
+                    </div>
+                {:else}
+                    <div class="content">
+                        <p>
+                            {#if data.balanceInfo?.assets.length ?? 0 > 0}
+                                Не найдено ни одного актива.
+                            {:else}
+                                У вас нет активов!
+                            {/if}
+
+                            Перейдите в
+                            <a class="has-text-danger" href="/prices">биржу</a>,
+                            чтобы купить
+                        </p>
+                    </div>
+                {/if}
             </div>
         </div>
-
-        {#if sortedBalances.length > 0}
-            <div class="table-container">
-                <table class="table is-hoverable is-fullwidth">
-                    <thead>
-                        <tr>
-                            {#each headers as header}
-                                <HeaderCell
-                                    bind:sortProperty
-                                    bind:sortDirection
-                                    property={header[0]}
-                                    name={header[1]}
-                                />
-                            {/each}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {#each sortedBalances as balance}
-                            <tr>
-                                <td>
-                                    <a
-                                        class="has-text-danger"
-                                        href={"/prices/" +
-                                            encodeURIComponent(
-                                                balance.assetsSymbol
-                                            )}>{balance.assetsSymbol}</a
-                                    >
-                                </td>
-                                <td
-                                    >{formatDecimal(
-                                        balance.assetsCount,
-                                        false
-                                    )}</td
-                                >
-                                <td>{formatUSD(balance.spentUsd, false)}</td>
-                                <td>{formatUSD(balance.costUsd, false)}</td>
-                                <td
-                                    >{formatPercentage(
-                                        balance.percent,
-                                        true
-                                    )}</td
-                                >
-                            </tr>
-                        {/each}
-                    </tbody>
-                    {#if searchQuery.length == 0}
-                        <tfoot>
-                            <tr>
-                                <th>Итого</th>
-                                <th />
-                                <th
-                                    >{formatUSD(
-                                        data.balanceInfo?.changeCost.spentUsd,
-                                        false
-                                    )}</th
-                                >
-                                <th
-                                    >{formatUSD(
-                                        data.balanceInfo?.changeCost.costUsd,
-                                        false
-                                    )}</th
-                                >
-                                <th
-                                    >{formatPercentage(
-                                        data.balanceInfo?.changeCost.percent,
-                                        true
-                                    )}</th
-                                >
-                            </tr>
-                        </tfoot>
-                    {/if}
-                </table>
-            </div>
-        {:else}
-            <div class="content">
-                <p>
-                    {#if data.balanceInfo?.assets.length ?? 0 > 0}
-                        Не найдено ни одного актива.
-                    {:else}
-                        У вас нет активов!
-                    {/if}
-
-                    Перейдите в
-                    <a class="has-text-danger" href="/prices">биржу</a>, чтобы
-                    купить
-                </p>
-            </div>
-        {/if}
     {/if}
 </div>

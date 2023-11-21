@@ -19,7 +19,6 @@
 
     import RefreshButton from "$lib/components/RefreshButton.svelte";
     import CallToLogin from "$lib/components/CallToLogin.svelte";
-    import { onMount } from "svelte";
 
     export let data: PageData;
 
