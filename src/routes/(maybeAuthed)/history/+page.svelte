@@ -27,10 +27,14 @@
     let sortDirection = -1;
 
     $: sortedOrders = (data.orders ?? [])
-        .filter((asset) => {
+        .filter((order) => {
             return (
                 searchQuery.length < 1 ||
-                asset.assetsSymbol
+                order.assetsSymbol
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase()) ||
+                order.id
+                    .toString()
                     .toLowerCase()
                     .includes(searchQuery.toLowerCase())
             );
@@ -63,7 +67,7 @@
                     type="text"
                     bind:value={searchQuery}
                     maxlength="200"
-                    placeholder="Поиск по названию актива"
+                    placeholder="Поиск по названию актива или идентификатору транзакции"
                 />
             </div>
 
