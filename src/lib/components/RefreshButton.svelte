@@ -19,26 +19,26 @@
     }
 
     let autoEnabled: boolean = false;
-    const autoDelay = 5000;
+    let autoDelay = 5000;
+    let interval: number | undefined = undefined;
 
     async function autoRefresh() {
-        if (autoEnabled) {
+        if (autoEnabled && !loading) {
             await refresh();
-            _.delay(autoRefresh, autoDelay);
         }
     }
 
     async function toggleAuto() {
         autoEnabled = !autoEnabled;
-        await autoRefresh();
     }
 
     onMount(async () => {
-        _.delay(autoRefresh, autoDelay);
+        interval = setInterval(autoRefresh, autoDelay);
     });
 
     onDestroy(() => {
         autoEnabled = false;
+        clearInterval(interval);
     });
 </script>
 
