@@ -125,7 +125,7 @@
 
             <div class="level-right">
                 <div class="field is-grouped is-grouped-right">
-                    <div class="control">
+                    <div class="control mr-5">
                         <div
                             class="level-item has-text-right is-clickable"
                             on:click={toggleShowPercent}
@@ -133,7 +133,13 @@
                         >
                             <div>
                                 <p class="heading">За последние 24ч</p>
-                                <p class="title">
+                                <p
+                                    class="title"
+                                    class:has-text-success={data.last24hStats
+                                        .priceChangePercent > 0}
+                                    class:has-text-link={data.last24hStats
+                                        .priceChangePercent < 0}
+                                >
                                     {showPercent
                                         ? formatPercentage(
                                               data.last24hStats
@@ -144,6 +150,17 @@
                                               data.last24hStats.priceChange,
                                               true
                                           )}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control">
+                        <div class="level-item has-text-right">
+                            <div>
+                                <p class="heading">Сейчас 1 {data.symbol}</p>
+                                <p class="title">
+                                    {formatUSD(currentPrice, false)}
                                 </p>
                             </div>
                         </div>
