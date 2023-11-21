@@ -18,10 +18,14 @@ export const load = (async ({ fetch, params, depends }) => {
     const pricePoints: Data.PricePoint[] = await plainAPI(fetch, "GET", `coins/prices/${symbol}?interval=${view.interval}`, null, null);
 
     if (pricePoints) {
+        const prices = view.points == Infinity ? pricePoints : _.slice(pricePoints, pricePoints.length - view.points);
+
         return {
             view,
             symbol,
-            prices: view.points == Infinity ? pricePoints : _.slice(pricePoints, pricePoints.length - view.points)
+            prices,
+            priceOpenTimes: prices.map((point) => point.openTime),
+            priceOpens: prices.map((point) => point.open),
         };
     } else {
         throw genericServerError(undefined);

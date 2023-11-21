@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { Line } from "svelte-chartjs";
+    import LiveLine from "$lib/components/charts/LiveLine.svelte";
     import "chart.js/auto";
     import "chartjs-adapter-luxon";
-    import { DateTime } from "luxon";
     import _ from "lodash";
 
     import type { PageData } from "./$types";
@@ -168,19 +167,13 @@
             </div>
         </div>
 
-        <Line
+        <LiveLine
             data={{
-                labels: _.concat(
-                    data.prices.map((point) => point.openTime),
-                    [DateTime.now().toMillis()]
-                ),
+                labels: _.concat(data.priceOpenTimes, data.briefsTimestamp),
                 datasets: [
                     {
                         label: "Открытие",
-                        data: _.concat(
-                            data.prices.map((point) => point.open),
-                            [currentPrice]
-                        ),
+                        data: _.concat(data.priceOpens, currentPrice),
                         fill: true,
                         borderColor:
                             firstPrice == currentPrice
