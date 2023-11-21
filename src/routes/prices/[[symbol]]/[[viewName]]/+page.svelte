@@ -137,7 +137,7 @@
                 <div class="field is-grouped is-grouped-right">
                     <div class="control mr-5">
                         <div
-                            class="level-item has-text-right is-clickable"
+                            class="level-item has-text-right is-clickable is-unselectable"
                             on:click={toggleShowPercent}
                             on:keypress={toggleShowPercent}
                         >
@@ -166,7 +166,7 @@
                     </div>
 
                     <div class="control">
-                        <div class="level-item has-text-right">
+                        <div class="level-item has-text-right is-unselectable">
                             <div>
                                 <p class="heading">Сейчас 1 {data.symbol}</p>
                                 <p class="title">
