@@ -34,7 +34,7 @@ export const load = (async ({ fetch, params, depends }) => {
 
 export const actions = {
     buyAssets: async ({ fetch, cookies, request, locals }) => {
-        if (!locals.token) {
+        if (_.isNil(locals.token)) {
             throw error(403);
         }
 
@@ -42,11 +42,11 @@ export const actions = {
         const symbol = data.get("symbol") as string | null;
         const pendingUSD = data.get("pendingUSD") as number | null;
 
-        if (!symbol) {
+        if (_.isNil(symbol)) {
             throw error(400, { message: "Не указан актив" });
         }
 
-        if (!pendingUSD) {
+        if (_.isNil(pendingUSD)) {
             throw error(400, { message: "Не указана сумма в долларах или она равна нулю" });
         }
 
@@ -67,7 +67,7 @@ export const actions = {
         }
     },
     sellAssets: async ({ fetch, cookies, request, locals }) => {
-        if (!locals.token) {
+        if (_.isNil(locals.token)) {
             throw error(403);
         }
 
@@ -75,11 +75,11 @@ export const actions = {
         const symbol = data.get("symbol") as string | null;
         const pendingAssets = data.get("pendingAssets") as number | null;
 
-        if (!symbol) {
+        if (_.isNil(symbol)) {
             throw error(400, { message: "Не указан актив" });
         }
 
-        if (!pendingAssets) {
+        if (_.isNil(pendingAssets)) {
             throw error(400, { message: "Не указана сумма актива или она равна нулю" });
         }
 
@@ -100,14 +100,14 @@ export const actions = {
         }
     },
     sellAllAssets: async ({ fetch, cookies, request, locals }) => {
-        if (!locals.token) {
+        if (_.isNil(locals.token)) {
             throw error(403);
         }
 
         const data = await request.formData();
         const symbol = data.get("symbol") as string | null;
 
-        if (!symbol) {
+        if (_.isNil(symbol)) {
             throw error(400, { message: "Не указан актив" });
         }
 
