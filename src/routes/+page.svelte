@@ -50,7 +50,7 @@
         ["assetsCount", "Баланс"],
         ["spentUsd", "Потрачено"],
         ["costUsd", "Текущая стоимость"],
-        ["percent", "Процент выигрыша"],
+        ["percent", "Выигрыш"],
     ];
 </script>
 
@@ -190,6 +190,9 @@
                                             bind:sortDirection
                                             property={header[0]}
                                             name={header[1]}
+                                            class={header[0] == "assetsSymbol"
+                                                ? ""
+                                                : "has-text-right"}
                                         />
                                     {/each}
                                 </tr>
@@ -207,24 +210,28 @@
                                             >
                                         </td>
                                         <td
+                                            class="has-text-right is-family-monospace"
                                             >{formatDecimal(
                                                 balance.assetsCount,
                                                 false
                                             )}</td
                                         >
                                         <td
+                                            class="has-text-right is-family-monospace"
                                             >{formatUSD(
                                                 balance.spentUsd,
                                                 false
                                             )}</td
                                         >
                                         <td
+                                            class="has-text-right is-family-monospace"
                                             >{formatUSD(
                                                 balance.costUsd,
                                                 false
                                             )}</td
                                         >
                                         <td
+                                            class="has-text-right is-family-monospace"
                                             >{formatPercentage(
                                                 balance.percent,
                                                 true
@@ -239,6 +246,7 @@
                                         <th>Итого</th>
                                         <th />
                                         <th
+                                            class="has-text-right is-family-monospace"
                                             >{formatUSD(
                                                 data.balanceInfo?.changeCost
                                                     .spentUsd,
@@ -246,6 +254,7 @@
                                             )}</th
                                         >
                                         <th
+                                            class="has-text-right is-family-monospace"
                                             >{formatUSD(
                                                 data.balanceInfo?.changeCost
                                                     .costUsd,
@@ -253,6 +262,7 @@
                                             )}</th
                                         >
                                         <th
+                                            class="has-text-right is-family-monospace"
                                             >{formatPercentage(
                                                 data.balanceInfo?.changeCost
                                                     .percent,

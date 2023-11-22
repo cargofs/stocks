@@ -60,6 +60,7 @@
                             bind:sortDirection
                             property={header[0]}
                             name={header[1]}
+                            class={header[0] == "login" ? "" : "has-text-right"}
                         />
                     {/each}
                 </tr>
@@ -72,9 +73,15 @@
                         class:has-text-white={userScoreFlat.login == data.login}
                     >
                         <td>{userScoreFlat.login}</td>
-                        <td>{formatUSD(userScoreFlat.spentUsd, false)}</td>
-                        <td>{formatUSD(userScoreFlat.costUsd, false)}</td>
-                        <td>{formatPercentage(userScoreFlat.percent, true)}</td>
+                        <td class="has-text-right is-family-monospace"
+                            >{formatUSD(userScoreFlat.spentUsd, false)}</td
+                        >
+                        <td class="has-text-right is-family-monospace"
+                            >{formatUSD(userScoreFlat.costUsd, false)}</td
+                        >
+                        <td class="has-text-right is-family-monospace"
+                            >{formatPercentage(userScoreFlat.percent, true)}</td
+                        >
                     </tr>
                 {/each}
             </tbody>

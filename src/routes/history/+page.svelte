@@ -87,6 +87,11 @@
                                     bind:sortDirection
                                     property={header[0]}
                                     name={header[1]}
+                                    class={["assetsCount", "money"].includes(
+                                        header[0]
+                                    )
+                                        ? "has-text-right"
+                                        : ""}
                                 />
                             {/each}
                         </tr>
@@ -112,6 +117,7 @@
                                     >
                                 </td>
                                 <td
+                                    class="has-text-right is-family-monospace"
                                     class:has-text-weight-bold={order.assetsCount <
                                         0}
                                     >{formatDecimal(
@@ -119,7 +125,9 @@
                                         true
                                     )}</td
                                 >
-                                <td class:has-text-weight-bold={order.money < 0}
+                                <td
+                                    class="has-text-right is-family-monospace"
+                                    class:has-text-weight-bold={order.money < 0}
                                     >{formatUSD(order.money, true)}</td
                                 >
                             </tr>

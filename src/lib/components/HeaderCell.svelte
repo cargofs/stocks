@@ -5,6 +5,9 @@
     export let sortProperty: T;
     export let sortDirection: number;
 
+    let classNames: string = "";
+    export { classNames as class };
+
     function setSearchBy(property: T) {
         if (sortProperty == property) {
             sortDirection = -sortDirection;
@@ -19,7 +22,7 @@
     on:click={() => {
         setSearchBy(property);
     }}
-    class="is-unselectable is-clickable"
+    class={`is-unselectable is-clickable ${classNames}`}
 >
     {name}
     {#if sortProperty == property}
