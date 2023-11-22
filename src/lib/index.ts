@@ -6,6 +6,7 @@ export const DEFAULT_SYMBOL = "BTC";
 
 export const USD_PRECISION = 2;
 export const ASSET_PRECISION = 6;
+export const PERCENTAGE_PRECISION = 2;
 
 export enum CookieName {
     SESSION = "SESSION"
@@ -93,7 +94,8 @@ export function formatPercentage(value: string | number | undefined, signForPosi
     const format = Intl.NumberFormat("ru", {
         signDisplay: signForPositive ? "exceptZero" : "auto",
         style: "percent",
-        maximumFractionDigits: 2
+        minimumFractionDigits: PERCENTAGE_PRECISION,
+        maximumFractionDigits: PERCENTAGE_PRECISION
     });
 
     return format.format(numberValue / 100);
@@ -127,6 +129,7 @@ export function formatUSD(value: string | number | undefined, signForPositive: b
         signDisplay: signForPositive ? "exceptZero" : "auto",
         style: "currency",
         currency: "USD",
+        minimumFractionDigits: USD_PRECISION,
         maximumFractionDigits: USD_PRECISION,
     });
 
