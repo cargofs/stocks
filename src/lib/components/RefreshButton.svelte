@@ -18,7 +18,7 @@
         loading = false;
     }
 
-    let autoEnabled: boolean = false;
+    let autoEnabled: boolean = true;
     let autoDelay = 5000;
     let interval: number | undefined = undefined;
 
