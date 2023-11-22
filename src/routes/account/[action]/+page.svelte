@@ -1,6 +1,7 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
     import { goto, invalidate } from "$app/navigation";
+    import { page } from "$app/stores";
     import { APIStatusCode } from "$lib";
     import type { PageData } from "./$types";
 
@@ -148,20 +149,18 @@
         {#if data.action == "login"}
             Нет учётной записи? <a
                 class="has-text-danger"
-                href={data.continue
-                    ? `/account/create?continue=${encodeURIComponent(
-                          data.continue
-                      )}`
-                    : `/account/create`}>Зарегистрироваться</a
+                href={($page.url.pathname + $page.url.search).replace(
+                    "/login",
+                    "/create"
+                )}>Зарегистрироваться</a
             >
         {:else}
             Уже есть учётная запись? <a
                 class="has-text-danger"
-                href={data.continue
-                    ? `/account/login?continue=${encodeURIComponent(
-                          data.continue
-                      )}`
-                    : `/account/login`}>Войти</a
+                href={($page.url.pathname + $page.url.search).replace(
+                    "/create",
+                    "/login"
+                )}>Войти</a
             >
         {/if}
     </p>
