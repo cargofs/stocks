@@ -106,6 +106,9 @@
                 class="input is-danger"
                 type="password"
                 placeholder="Пароль"
+                autocomplete={data.action == "login"
+                    ? "current-password"
+                    : "new-password"}
                 name="password"
                 {pattern}
                 bind:value={password}
@@ -131,6 +134,7 @@
                     class="input is-danger"
                     type="password"
                     placeholder="Пароль (ещё раз)"
+                    autocomplete="new-password"
                     name="passwordAgain"
                     {pattern}
                     bind:value={passwordAgain}
