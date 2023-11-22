@@ -93,7 +93,9 @@
                 <i class="fa-solid fa-user" />
             </span>
         </p>
-        {#if login.length > 0 && !loginOk}
+        {#if login.length > 32}
+            <p class="help is-danger">Максимум 32 символа</p>
+        {:else if login.length > 0 && !loginOk}
             <p class="help is-danger">Только a-z, A-Z, 0-9</p>
         {:else if data.action == "create" && knownTakenLogins.includes(login)}
             <p class="help is-danger">Данное имя уже занято</p>
@@ -120,7 +122,9 @@
                 <i class="fa-solid fa-lock" />
             </span>
         </p>
-        {#if password.length > 0 && !passwordOk}
+        {#if password.length > 32}
+            <p class="help is-danger">Максимум 32 символа</p>
+        {:else if password.length > 0 && !passwordOk}
             <p class="help is-danger">Только a-z, A-Z, 0-9</p>
         {:else if loginOrPasswordWasWrong}
             <p class="help is-danger">Неверное имя пользователя или пароль</p>
