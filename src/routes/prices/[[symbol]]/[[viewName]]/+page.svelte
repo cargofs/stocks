@@ -322,7 +322,7 @@
                             type="submit"
                             formaction="?/buyAssets"
                             disabled={(anyLoading && !buyAssetsLoading) ||
-                                !data.usdBalance ||
+                                _.isNil(data.usdBalance) ||
                                 pendingUSD < USD_MIN ||
                                 pendingUSD > data.usdBalance}
                         >
@@ -405,7 +405,7 @@
                             type="submit"
                             formaction="?/sellAssets"
                             disabled={(anyLoading && !sellAssetsLoading) ||
-                                !data.assetBalance ||
+                                _.isNil(data.assetBalance) ||
                                 pendingAssets < ASSET_MIN ||
                                 pendingAssets > data.assetBalance}
                         >
@@ -448,7 +448,7 @@
                             type="submit"
                             formaction="?/sellAllAssets"
                             disabled={(anyLoading && !sellAllAssetsLoading) ||
-                                !data.assetBalance ||
+                                _.isNil(data.assetBalance) ||
                                 data.assetBalance <= 0}
                         >
                             Продать все {formatAsset(data.assetBalance, false)}
