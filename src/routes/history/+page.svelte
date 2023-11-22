@@ -118,8 +118,7 @@
                                 </td>
                                 <td
                                     class="has-text-right is-family-monospace"
-                                    class:has-text-weight-bold={order.assetsCount <
-                                        0}
+                                    class:has-text-link={order.assetsCount < 0}
                                     >{formatDecimal(
                                         order.assetsCount,
                                         true
@@ -127,7 +126,7 @@
                                 >
                                 <td
                                     class="has-text-right is-family-monospace"
-                                    class:has-text-weight-bold={order.money < 0}
+                                    class:has-text-link={order.money < 0}
                                     >{formatUSD(order.money, true)}</td
                                 >
                             </tr>
