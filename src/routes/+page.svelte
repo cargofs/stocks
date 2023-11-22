@@ -136,6 +136,7 @@
                         ],
                     }}
                     options={{
+                        maintainAspectRatio: false,
                         plugins: {
                             legend: {
                                 title: {
