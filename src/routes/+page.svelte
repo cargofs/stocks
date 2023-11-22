@@ -8,12 +8,7 @@
     import _ from "lodash";
 
     import type { PageData } from "./$types";
-    import {
-        formatDecimal,
-        formatPercentage,
-        formatUSD,
-        compareFn,
-    } from "$lib";
+    import { formatAsset, formatPercentage, formatUSD, compareFn } from "$lib";
 
     import CallToLogin from "$lib/components/CallToLogin.svelte";
     import HeaderCell from "$lib/components/HeaderCell.svelte";
@@ -216,7 +211,7 @@
                                         </td>
                                         <td
                                             class="has-text-right is-family-monospace"
-                                            >{formatDecimal(
+                                            >{formatAsset(
                                                 balance.assetsCount,
                                                 false,
                                             )}</td

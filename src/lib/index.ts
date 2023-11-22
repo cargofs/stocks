@@ -105,7 +105,7 @@ export function formatPercentage(value: string | number | undefined, signForPosi
     return format.format(numberValue / 100);
 }
 
-export function formatDecimal(value: string | number | undefined, signForPositive: boolean): string {
+export function formatAsset(value: string | number | undefined, signForPositive: boolean): string {
     const numberValue = cleanNumber(value);
 
     if (_.isNil(numberValue)) {

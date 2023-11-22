@@ -13,7 +13,7 @@
         ASSET_PRECISION,
         USD_MIN,
         USD_PRECISION,
-        formatDecimal,
+        formatAsset,
         formatPercentage,
         formatUSD,
     } from "$lib";
@@ -364,7 +364,7 @@
                     <div>
                         <p class="heading">Активов {data.symbol}</p>
                         <p class="title">
-                            {formatDecimal(data.assetBalance, false)}
+                            {formatAsset(data.assetBalance, false)}
                         </p>
                     </div>
                 </div>
@@ -409,7 +409,7 @@
                                 pendingAssets < ASSET_MIN ||
                                 pendingAssets > data.assetBalance}
                         >
-                            Продать {formatDecimal(pendingAssets, false)}
+                            Продать {formatAsset(pendingAssets, false)}
                             {data.symbol}
                         </button>
                     </div>
@@ -451,10 +451,7 @@
                                 !data.assetBalance ||
                                 data.assetBalance <= 0}
                         >
-                            Продать все {formatDecimal(
-                                data.assetBalance,
-                                false,
-                            )}
+                            Продать все {formatAsset(data.assetBalance, false)}
                             {data.symbol}
                         </button>
                     </div>

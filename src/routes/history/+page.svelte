@@ -4,7 +4,7 @@
     import _ from "lodash";
 
     import type { PageData } from "./$types";
-    import { formatDecimal, formatUSD, compareFn } from "$lib";
+    import { formatAsset, formatUSD, compareFn } from "$lib";
 
     import CallToLogin from "$lib/components/CallToLogin.svelte";
     import HeaderCell from "$lib/components/HeaderCell.svelte";
@@ -123,10 +123,7 @@
                                 <td
                                     class="has-text-right is-family-monospace"
                                     class:has-text-link={order.assetsCount < 0}
-                                    >{formatDecimal(
-                                        order.assetsCount,
-                                        true,
-                                    )}</td
+                                    >{formatAsset(order.assetsCount, true)}</td
                                 >
                                 <td
                                     class="has-text-right is-family-monospace"
