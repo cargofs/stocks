@@ -4,6 +4,9 @@ import _ from 'lodash';
 
 export const DEFAULT_SYMBOL = "BTC";
 
+export const USD_PRECISION = 2;
+export const ASSET_PRECISION = 6;
+
 export enum CookieName {
     SESSION = "SESSION"
 }
@@ -106,7 +109,7 @@ export function formatDecimal(value: string | number | undefined, signForPositiv
     const format = Intl.NumberFormat("ru", {
         signDisplay: signForPositive ? "exceptZero" : "auto",
         style: "decimal",
-        maximumFractionDigits: 10,
+        maximumFractionDigits: ASSET_PRECISION,
     });
 
     return format.format(numberValue);
@@ -123,7 +126,7 @@ export function formatUSD(value: string | number | undefined, signForPositive: b
         signDisplay: signForPositive ? "exceptZero" : "auto",
         style: "currency",
         currency: "USD",
-        maximumFractionDigits: 2,
+        maximumFractionDigits: USD_PRECISION,
     });
 
     return format.format(numberValue);

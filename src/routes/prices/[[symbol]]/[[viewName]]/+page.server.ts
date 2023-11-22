@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 import type { PageServerLoad } from './$types';
 
-import { APIStatusCode, DEFAULT_SYMBOL, genericServerError } from '$lib';
+import { APIStatusCode, ASSET_PRECISION, DEFAULT_SYMBOL, USD_PRECISION, genericServerError } from '$lib';
 import { DEFAULT_VIEW_NAME, priceViews } from "$lib/priceViews";
 import { api, plainAPI } from '$lib/server/api';
 import { error, type Actions } from '@sveltejs/kit';
@@ -52,7 +52,7 @@ export const actions = {
 
         const apiResponse: Data.APINormalResponse<null> = await api(fetch, "POST", "orders/create", {
             assetsSymbol: symbol,
-            usdMoney: _.round(pendingUSD, 2)
+            usdMoney: _.round(pendingUSD, USD_PRECISION)
         }, locals.token, { cookies });
 
         if (apiResponse.statusCode == APIStatusCode.SUCCESS) {
@@ -85,7 +85,7 @@ export const actions = {
 
         const apiResponse: Data.APINormalResponse<null> = await api(fetch, "POST", "orders/sell", {
             assetsSymbol: symbol,
-            assetsCount: _.round(pendingAssets, 10)
+            assetsCount: _.round(pendingAssets, ASSET_PRECISION)
         }, locals.token, { cookies });
 
         if (apiResponse.statusCode == APIStatusCode.SUCCESS) {

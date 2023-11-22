@@ -9,6 +9,8 @@
 
     import {
         APIStatusCode,
+        ASSET_PRECISION,
+        USD_PRECISION,
         formatDecimal,
         formatPercentage,
         formatUSD,
@@ -53,13 +55,19 @@
             if (pendingAssets <= 0) {
                 return;
             }
-            pendingUSD = _.round(_.toNumber(pendingAssets) * currentPrice, 2);
+            pendingUSD = _.round(
+                _.toNumber(pendingAssets) * currentPrice,
+                USD_PRECISION
+            );
             lackOfUSD = false;
         } else {
             if (pendingUSD <= 0) {
                 return;
             }
-            pendingAssets = _.round(_.toNumber(pendingUSD) / currentPrice, 10);
+            pendingAssets = _.round(
+                _.toNumber(pendingUSD) / currentPrice,
+                ASSET_PRECISION
+            );
             lackOfAssets = false;
         }
     }
