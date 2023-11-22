@@ -109,6 +109,7 @@ export function formatDecimal(value: string | number | undefined, signForPositiv
     const format = Intl.NumberFormat("ru", {
         signDisplay: signForPositive ? "exceptZero" : "auto",
         style: "decimal",
+        minimumFractionDigits: ASSET_PRECISION,
         maximumFractionDigits: ASSET_PRECISION,
     });
 
