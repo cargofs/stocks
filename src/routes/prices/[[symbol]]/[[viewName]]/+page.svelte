@@ -57,7 +57,7 @@
             }
             pendingUSD = _.round(
                 _.toNumber(pendingAssets) * currentPrice,
-                USD_PRECISION
+                USD_PRECISION,
             );
             lackOfUSD = false;
         } else {
@@ -66,7 +66,7 @@
             }
             pendingAssets = _.round(
                 _.toNumber(pendingUSD) / currentPrice,
-                ASSET_PRECISION
+                ASSET_PRECISION,
             );
             lackOfAssets = false;
         }
@@ -102,7 +102,7 @@
                                     on:input={async (ev) => {
                                         const symbol = ev.currentTarget.value;
                                         await goto(
-                                            `/prices/${symbol}/${data.view.name}`
+                                            `/prices/${symbol}/${data.view.name}`,
                                         );
                                         reset();
                                     }}
@@ -121,7 +121,7 @@
                                     on:input={async (ev) => {
                                         const viewName = ev.currentTarget.value;
                                         await goto(
-                                            `/prices/${data.symbol}/${viewName}`
+                                            `/prices/${data.symbol}/${viewName}`,
                                         );
                                         reset();
                                     }}
@@ -166,11 +166,11 @@
                                         ? formatPercentage(
                                               data.last24hStats
                                                   .priceChangePercent,
-                                              true
+                                              true,
                                           )
                                         : formatUSD(
                                               data.last24hStats.priceChange,
-                                              true
+                                              true,
                                           )}
                                 </p>
                             </div>
@@ -203,8 +203,8 @@
                             firstPrice == currentPrice
                                 ? "hsl(48, 100%, 67%)"
                                 : firstPrice < currentPrice
-                                ? "hsl(141, 71%, 48%)"
-                                : "hsl(217, 71%, 53%)",
+                                  ? "hsl(141, 71%, 48%)"
+                                  : "hsl(217, 71%, 53%)",
                         tension: 0.3,
                     },
                 ],
@@ -326,7 +326,7 @@
                         >
                             Купить {data.symbol} за {formatUSD(
                                 pendingUSD,
-                                false
+                                false,
                             )}
                         </button>
                     </div>
@@ -451,7 +451,7 @@
                         >
                             Продать все {formatDecimal(
                                 data.assetBalance,
-                                false
+                                false,
                             )}
                             {data.symbol}
                         </button>

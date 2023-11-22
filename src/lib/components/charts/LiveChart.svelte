@@ -12,7 +12,7 @@
     interface $$Props<
         TType extends ChartType = ChartType,
         TData = DefaultDataPoint<TType>,
-        TLabel = unknown
+        TLabel = unknown,
     > extends ChartBaseProps<TType, TData, TLabel> {
         chart?: ChartJS<TType, TData, TLabel> | null;
     }

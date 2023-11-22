@@ -159,7 +159,7 @@
                 class="has-text-danger"
                 href={($page.url.pathname + $page.url.search).replace(
                     "/login",
-                    "/create"
+                    "/create",
                 )}>Зарегистрироваться</a
             >
         {:else}
@@ -167,7 +167,7 @@
                 class="has-text-danger"
                 href={($page.url.pathname + $page.url.search).replace(
                     "/create",
-                    "/login"
+                    "/login",
                 )}>Войти</a
             >
         {/if}

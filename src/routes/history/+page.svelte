@@ -92,7 +92,7 @@
                                     property={header[0]}
                                     name={header[1]}
                                     class={["assetsCount", "money"].includes(
-                                        header[0]
+                                        header[0],
                                     )
                                         ? "has-text-right"
                                         : ""}
@@ -108,7 +108,7 @@
                                     >{DateTime.fromISO(order.date)
                                         .setLocale("ru")
                                         .toLocaleString(
-                                            DateTime.DATETIME_MED_WITH_SECONDS
+                                            DateTime.DATETIME_MED_WITH_SECONDS,
                                         )}</td
                                 >
                                 <td>
@@ -116,7 +116,7 @@
                                         class="has-text-danger"
                                         href={"/prices/" +
                                             encodeURIComponent(
-                                                order.assetsSymbol
+                                                order.assetsSymbol,
                                             )}>{order.assetsSymbol}</a
                                     >
                                 </td>
@@ -125,7 +125,7 @@
                                     class:has-text-link={order.assetsCount < 0}
                                     >{formatDecimal(
                                         order.assetsCount,
-                                        true
+                                        true,
                                     )}</td
                                 >
                                 <td

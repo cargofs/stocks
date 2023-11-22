@@ -41,7 +41,7 @@
         data-sveltekit-reload
         href={isTokenError
             ? `/account/login?continue=${encodeURIComponent(
-                  $page.url.pathname
+                  $page.url.pathname,
               )}&forcedLogout=1`
             : $page.url.pathname}
     >

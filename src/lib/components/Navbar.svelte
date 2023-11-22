@@ -16,17 +16,17 @@
             name: _.isNil(login)
                 ? "Учётная запись"
                 : dev
-                ? `${login} (${$page.data.id})`
-                : login,
+                  ? `${login} (${$page.data.id})`
+                  : login,
             inner: [
                 {
                     path: $page.url.pathname.startsWith("/account")
                         ? ($page.url.pathname + $page.url.search).replace(
                               "/login",
-                              "/create"
+                              "/create",
                           )
                         : `/account/create?continue=${encodeURIComponent(
-                              $page.url.pathname
+                              $page.url.pathname,
                           )}&explicit=1`,
                     name: "Регистрация",
                     condition: _.isNil(login),
@@ -35,10 +35,10 @@
                     path: $page.url.pathname.startsWith("/account")
                         ? ($page.url.pathname + $page.url.search).replace(
                               "/create",
-                              "/login"
+                              "/login",
                           )
                         : `/account/login?continue=${encodeURIComponent(
-                              $page.url.pathname
+                              $page.url.pathname,
                           )}&explicit=1`,
                     name: "Вход",
                     condition: _.isNil(login),
@@ -71,7 +71,7 @@
                     "preload",
                     "logout",
                     "disabled",
-                    "iconClasses"
+                    "iconClasses",
                 ),
             };
 

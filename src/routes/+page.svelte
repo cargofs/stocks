@@ -95,7 +95,7 @@
                         {formatUSD(
                             (data.balanceInfo?.usdMoney ?? 0) +
                                 (data.balanceInfo?.changeCost.costUsd ?? 0),
-                            false
+                            false,
                         )}
                     </p>
                 </div>
@@ -115,7 +115,7 @@
                             (data.balanceInfo?.assets ?? [])
                                 .filter((asset) => asset.costUsd > 0)
                                 .sort(compareFn(sortProperty, sortDirection))
-                                .map((asset) => asset.assetsSymbol)
+                                .map((asset) => asset.assetsSymbol),
                         ),
                         datasets: [
                             {
@@ -127,10 +127,10 @@
                                         .sort(
                                             compareFn(
                                                 sortProperty,
-                                                sortDirection
-                                            )
+                                                sortDirection,
+                                            ),
                                         )
-                                        .map((asset) => asset.costUsd)
+                                        .map((asset) => asset.costUsd),
                                 ),
                             },
                         ],
@@ -155,7 +155,7 @@
                                         if (context.parsed !== null) {
                                             label += formatUSD(
                                                 context.parsed,
-                                                false
+                                                false,
                                             );
                                         }
                                         return label;
@@ -210,7 +210,7 @@
                                                 class="has-text-danger"
                                                 href={"/prices/" +
                                                     encodeURIComponent(
-                                                        balance.assetsSymbol
+                                                        balance.assetsSymbol,
                                                     )}>{balance.assetsSymbol}</a
                                             >
                                         </td>
@@ -218,28 +218,28 @@
                                             class="has-text-right is-family-monospace"
                                             >{formatDecimal(
                                                 balance.assetsCount,
-                                                false
+                                                false,
                                             )}</td
                                         >
                                         <td
                                             class="has-text-right is-family-monospace"
                                             >{formatUSD(
                                                 balance.spentUsd,
-                                                false
+                                                false,
                                             )}</td
                                         >
                                         <td
                                             class="has-text-right is-family-monospace"
                                             >{formatUSD(
                                                 balance.costUsd,
-                                                false
+                                                false,
                                             )}</td
                                         >
                                         <td
                                             class="has-text-right is-family-monospace"
                                             >{formatPercentage(
                                                 balance.percent,
-                                                true
+                                                true,
                                             )}</td
                                         >
                                     </tr>
@@ -255,7 +255,7 @@
                                             >{formatUSD(
                                                 data.balanceInfo?.changeCost
                                                     .spentUsd,
-                                                false
+                                                false,
                                             )}</th
                                         >
                                         <th
@@ -263,7 +263,7 @@
                                             >{formatUSD(
                                                 data.balanceInfo?.changeCost
                                                     .costUsd,
-                                                false
+                                                false,
                                             )}</th
                                         >
                                         <th
@@ -271,7 +271,7 @@
                                             >{formatPercentage(
                                                 data.balanceInfo?.changeCost
                                                     .percent,
-                                                true
+                                                true,
                                             )}</th
                                         >
                                     </tr>
