@@ -1,18 +1,12 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { getContext } from "svelte";
-    import type { Writable } from "svelte/store";
     import _ from "lodash";
-    import { goto, invalidateAll } from "$app/navigation";
+    import { invalidateAll } from "$app/navigation";
     import NavbarTargetVisual from "./NavbarTargetVisual.svelte";
 
     export let target: TargetMod;
 
-    const pageTitleParts: Writable<string[]> = getContext("pageTitleParts");
-
     async function click() {
-        pageTitleParts.set(target.nameParts);
-
         if (target.logout) {
             await fetch("/?/logout", { method: "POST", body: "" });
             await invalidateAll();

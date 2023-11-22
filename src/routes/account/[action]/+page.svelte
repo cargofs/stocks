@@ -20,6 +20,11 @@
     let loading = false;
 </script>
 
+<svelte:head>
+    <title>CoinStocks | {data.action == "login" ? "Вход" : "Регистрация"}</title
+    >
+</svelte:head>
+
 <div class="content">
     <h1>{data.action == "login" ? "Вход" : "Регистрация"}</h1>
 

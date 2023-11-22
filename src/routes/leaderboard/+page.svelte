@@ -33,6 +33,10 @@
     ];
 </script>
 
+<svelte:head>
+    <title>CoinStocks | Таблица лидеров</title>
+</svelte:head>
+
 <div class="field is-grouped">
     <div class="control is-expanded">
         <input

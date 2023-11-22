@@ -85,6 +85,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>CoinStocks | Биржа | {data.symbol} | {data.view.name}</title>
+</svelte:head>
+
 <div class="columns is-desktop is-multiline">
     <div class="column is-12-desktop is-8-widescreen is-9-fullhd">
         <div class="level">

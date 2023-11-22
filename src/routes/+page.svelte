@@ -54,6 +54,10 @@
     ];
 </script>
 
+<svelte:head>
+    <title>CoinStocks | Главная</title>
+</svelte:head>
+
 <div class="content">
     {#if !showData}
         <section class="hero">

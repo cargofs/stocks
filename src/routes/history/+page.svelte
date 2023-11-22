@@ -50,6 +50,10 @@
     ];
 </script>
 
+<svelte:head>
+    <title>CoinStocks | История операций</title>
+</svelte:head>
+
 <div class="content">
     {#if !showData}
         <div class="content">
