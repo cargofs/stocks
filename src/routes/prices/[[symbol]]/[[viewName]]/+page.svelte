@@ -9,7 +9,9 @@
 
     import {
         APIStatusCode,
+        ASSET_MIN,
         ASSET_PRECISION,
+        USD_MIN,
         USD_PRECISION,
         formatDecimal,
         formatPercentage,
@@ -289,8 +291,8 @@
                         <input
                             class="input is-danger"
                             type="number"
-                            min="0"
-                            step="0.01"
+                            min={USD_MIN}
+                            step={USD_MIN}
                             placeholder="Сумма в долларах"
                             name="pendingUSD"
                             bind:value={pendingUSD}
@@ -321,7 +323,7 @@
                             formaction="?/buyAssets"
                             disabled={(anyLoading && !buyAssetsLoading) ||
                                 !data.usdBalance ||
-                                pendingUSD < 0.01 ||
+                                pendingUSD < USD_MIN ||
                                 pendingUSD > data.usdBalance}
                         >
                             Купить {data.symbol} за {formatUSD(
@@ -372,8 +374,8 @@
                         <input
                             class="input is-danger"
                             type="number"
-                            min="0"
-                            step="any"
+                            min={ASSET_MIN}
+                            step={ASSET_MIN}
                             placeholder="Сумма активов"
                             name="pendingAssets"
                             bind:value={pendingAssets}
@@ -404,7 +406,7 @@
                             formaction="?/sellAssets"
                             disabled={(anyLoading && !sellAssetsLoading) ||
                                 !data.assetBalance ||
-                                pendingAssets <= 0 ||
+                                pendingAssets < ASSET_MIN ||
                                 pendingAssets > data.assetBalance}
                         >
                             Продать {formatDecimal(pendingAssets, false)}

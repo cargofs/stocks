@@ -5,7 +5,11 @@ import _ from 'lodash';
 export const DEFAULT_SYMBOL = "BTC";
 
 export const USD_PRECISION = 2;
+export const USD_MIN = Math.pow(10, -USD_PRECISION);
+
 export const ASSET_PRECISION = 6;
+export const ASSET_MIN = Math.pow(10, -ASSET_PRECISION);
+
 export const PERCENTAGE_PRECISION = 2;
 
 export enum CookieName {
