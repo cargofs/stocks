@@ -79,12 +79,6 @@
     let sellAllAssetsLoading = false;
     $: anyLoading =
         buyAssetsLoading || sellAssetsLoading || sellAllAssetsLoading;
-
-    function reset() {
-        buyAssetsLoading = false;
-        sellAssetsLoading = false;
-        sellAllAssetsLoading = false;
-    }
 </script>
 
 <svelte:head>
@@ -106,7 +100,6 @@
                                         await goto(
                                             `/prices/${symbol}/${data.view.name}`,
                                         );
-                                        reset();
                                     }}
                                 >
                                     {#each data.symbols as symbol}
@@ -125,7 +118,6 @@
                                         await goto(
                                             `/prices/${data.symbol}/${viewName}`,
                                         );
-                                        reset();
                                     }}
                                 >
                                     {#each priceViews.map((view) => view.name) as viewName}
@@ -138,10 +130,7 @@
                         </div>
 
                         <div class="control">
-                            <RefreshButton
-                                invalidationURL="app:prices"
-                                additionalAction={reset}
-                            />
+                            <RefreshButton invalidationURL="app:prices" />
                         </div>
                     </div>
                 </div>
@@ -262,14 +251,14 @@
 
                         if (result.type === "success") {
                             await invalidate("app:prices");
-                            reset();
+                            buyAssetsLoading = false;
                         } else if (
                             result.type === "error" &&
                             result.error?.apiStatusCode ==
                                 APIStatusCode.VALIDATION_ERROR_USD
                         ) {
                             await invalidate("app:prices");
-                            reset();
+                            buyAssetsLoading = false;
                             lackOfUSD = true;
                         } else {
                             update();
@@ -343,14 +332,14 @@
 
                         if (result.type === "success") {
                             await invalidate("app:prices");
-                            reset();
+                            sellAssetsLoading = false;
                         } else if (
                             result.type === "error" &&
                             result.error?.apiStatusCode ==
                                 APIStatusCode.LACK_OF_RESOURCES
                         ) {
                             await invalidate("app:prices");
-                            reset();
+                            sellAssetsLoading = false;
                             lackOfAssets = true;
                         } else {
                             update();
@@ -428,7 +417,7 @@
 
                         if (result.type === "success") {
                             await invalidate("app:prices");
-                            reset();
+                            sellAllAssetsLoading = false;
                         } else {
                             update();
                         }
